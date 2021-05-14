@@ -6,11 +6,14 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "ext-zip": "*",
         "fideloper/proxy": "^4.4",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.40",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "nunomaduro/larastan": "^0.7.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -35,6 +38,12 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
+        ],
+        "larastan": [
+            "vendor/bin/phpstan analyse"
+        ],
+        "format-php": [
+            "php ./vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix --verbose --config=./php-cs.php --path-mode=intersection . --ansi"
         ]
     },
     "extra": {

@@ -26,7 +26,6 @@ services:
       - laravel-db
     environment:
       TZ: ${TZ}
-      CONTAINER_ROLE: app
       COMPOSER_HOME: ~/.composer
       COMPOSER_CACHE_DIR: ~/.composer/cache
     restart: unless-stopped
