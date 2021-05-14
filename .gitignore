@@ -1,8 +1,10 @@
 /node_modules
 /public/hot
 /public/storage
+/public/vue
 /storage/*.key
 /vendor
+/resources/vue/dist
 .DS_Store
 .env
 .env.backup
