@@ -22,14 +22,10 @@ class RouteServiceProvider extends ServiceProvider
                 ->middleware('api')
                 ->group(base_path('routes/api.php'));
 
-            Route::middleware('public')
-                ->name('public.')
-                ->group(base_path('routes/public.php'));
-
             Route::middleware('async')
                 ->name('async.')
                 ->prefix('async')
-                ->group(base_path('routes/web.php'));
+                ->group(base_path('routes/async.php'));
 
             Route::middleware('web')
                 ->name('web.')
