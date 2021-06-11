@@ -25,7 +25,7 @@ abstract class Model extends EloquentModel
      *
      * @throws RelationNotEagerLoadedException
      */
-    public function forceRelationsLoaded($relations, bool $check_value = false): void
+    public function forceRelationsLoaded(array|string $relations, bool $check_value = false): void
     {
         if (is_array($relations)) {
             foreach ($relations as $relation) {
@@ -78,7 +78,7 @@ abstract class Model extends EloquentModel
             $first_relation = $first_relation->first();
         }
 
-        if (! $first_relation instanceof BaseModel) {
+        if (! $first_relation instanceof self) {
             return;
         }
 
@@ -87,7 +87,7 @@ abstract class Model extends EloquentModel
 
     private function relationHasValue(string $relation): bool
     {
-        return $this->{$relation} instanceof BaseModel
-            || ($this->{$relation} instanceof Collection && $this->{$relation}->count() > 0);
+        return $this->{$relation} instanceof self ||
+            ($this->{$relation} instanceof Collection && $this->{$relation}->count() > 0);
     }
 }
