@@ -4,10 +4,10 @@ namespace App\Models;
 
 use App\Exceptions\RelationNotEagerLoadedException;
 use App\Traits\SerializeDateWithDefaultTimezone;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Collection;
 
-abstract class BaseModel extends Model
+abstract class Model extends EloquentModel
 {
     use SerializeDateWithDefaultTimezone;
 
