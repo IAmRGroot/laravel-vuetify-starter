@@ -19,7 +19,7 @@ services:
 
   laravel:
     container_name: ${APP_NAME}-laravel
-    image: xolvionl/laravel:minimal-8.0
+    image: xolvionl/laravel:${XOLVIO_DOCKER_TAG:-minimal-8.0}
     user: ${UID}
     command: php-fpm -F
     depends_on:
