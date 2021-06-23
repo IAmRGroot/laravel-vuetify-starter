@@ -2,7 +2,7 @@ const default_headers = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
 };
-const prefix = 'http://laravel.docker';
+const prefix = import.meta.env.VITE_APP_URL;
 
 const getUrl = (url: string): string => {
     return url.startsWith('/') ? prefix + url : url;

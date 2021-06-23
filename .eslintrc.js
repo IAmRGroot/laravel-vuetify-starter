@@ -20,7 +20,7 @@ module.exports = {
     rules: {
         // 'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
         // 'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        // 'vue/html-indent': ['error', 4],
+        'vue/html-indent': ['error', 4],
         // 'camelcase': 'off',
         // 'quotes': ['error', 'single'],
         // 'semi': ['error', 'always'],

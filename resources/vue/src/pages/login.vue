@@ -1,24 +1,28 @@
 <template>
     <v-container>
-        <v-row>
-            <v-col cols="12">
-                <label for="login">Username:</label>
-            </v-col>
-            <v-col cols="12">
-                <input type="text" name="login" v-model="login" style="outline: auto;">
-            </v-col>
-            <v-col cols="12">
-                <label for="password">Password:</label>
-            </v-col>
-            <v-col cols="12">
-                <input type="password" name="password" v-model="login" style="outline: auto;">
-            </v-col>
-            <v-col cols="12">
-                <button style="outline: auto;" @click="doLogin">Login</button>
-            </v-col>
-            <v-col cols="12">
-                {{ error }}
-            </v-col>
+        <v-row justify="center">
+            <v-card width="400">
+                <v-row>
+                    <v-col cols="12">
+                        <label for="login">Username:</label>
+                    </v-col>
+                    <v-col cols="12">
+                        <input type="text" name="login" v-model="login" style="outline: auto;">
+                    </v-col>
+                    <v-col cols="12">
+                        <label for="password">Password:</label>
+                    </v-col>
+                    <v-col cols="12">
+                        <input type="password" name="password" v-model="login" style="outline: auto;">
+                    </v-col>
+                    <v-col cols="12">
+                        <button style="outline: auto;" @click="doLogin">Login</button>
+                    </v-col>
+                    <v-col cols="12">
+                        {{ error }}
+                    </v-col>
+                </v-row>
+            </v-card>
         </v-row>
     </v-container>
 </template>
