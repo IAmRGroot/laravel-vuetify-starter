@@ -30,10 +30,13 @@
 <script lang="ts" setup>
     import { ref } from "vue";
     import { useRouter } from "vue-router";
-    import { post } from '../plugins/fetch';
+    import { get, post } from '../plugins/fetch';
     import { useAuth } from '../compositions/auth';
 
     type LoginResponse = {
+        url: string;
+    };
+    type TokenResponse = {
         url: string;
     };
 
@@ -45,13 +48,17 @@
 
     const doLogin = async () => {
         try {
-            const data = await post<LoginResponse>('/login', {
+            await get('/async/csrf');
+
+            const data = await post<LoginResponse>('/async/login', {
                 login: login,
                 password: password,
             });
 
             push(data.url);
         } catch (error) {
+            console.log(error);
+            
             error.value = error;
         }
     }

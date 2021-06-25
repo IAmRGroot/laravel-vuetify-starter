@@ -1,7 +1,10 @@
-const default_headers = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-};
+const default_init = {
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+    },
+    credentials: 'include',
+} as RequestInit
 const prefix = import.meta.env.VITE_APP_URL;
 
 const getUrl = (url: string): string => {
@@ -12,7 +15,7 @@ export const get = async <T>(url: string, init: RequestInit = {}): Promise<T> =>
     return handleResponse<T>(
         await fetch(getUrl(url), {
             method: 'GET',
-            headers: default_headers,
+            ...default_init,
             ...init
         })
     );
@@ -22,8 +25,8 @@ export const post = async <T>(url: string, body: any, init: RequestInit = {}): P
     return handleResponse<T>(
         await fetch(getUrl(url), {
             method: 'POST',
-            headers: default_headers,
             body: JSON.stringify(body),
+            ...default_init,
             ...init
         })
     );
@@ -33,8 +36,8 @@ export const put = async <T>(url: string, body: any, init: RequestInit = {}): Pr
     return handleResponse<T>(
         await fetch(getUrl(url), {
             method: 'PUT',
-            headers: default_headers,
             body: JSON.stringify(body),
+            ...default_init,
             ...init
         })
     );
@@ -44,14 +47,20 @@ export const _delete = async <T>(url: string, init: RequestInit = {}): Promise<T
     return handleResponse<T>(
         await fetch(getUrl(url), {
             method: 'DELETE',
-            headers: default_headers,
+            ...default_init,
             ...init
         })
     );
 }
 
 async function handleResponse<T>(response: Response): Promise<T> {
-    const json = await response.json();
+    let json;
+
+    try {
+        json = await response.json();
+    } catch (error) {
+        json = {};
+    }
 
     if (!response.ok) {
         const error = (json && json.message) || response.statusText;
