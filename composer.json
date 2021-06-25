@@ -20,6 +20,7 @@
         "spatie/laravel-permission": "^4.0"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.10",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "friendsofphp/php-cs-fixer": "^3.0",
@@ -50,6 +51,11 @@
         ],
         "format-php": [
             "php ./vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix --verbose --config=./php-cs.php --path-mode=intersection . --ansi"
+        ],
+        "ide-helper": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:models -W -r",
+            "composer format"
         ]
     },
     "extra": {

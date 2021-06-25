@@ -22,6 +22,7 @@ services:
     image: xolvionl/laravel:${XOLVIO_DOCKER_TAG:-minimal-8.0}
     user: ${UID}
     command: php-fpm -F
+    hostname: ${APP_NAME}
     depends_on:
       - laravel-db
     environment:
