@@ -2,23 +2,19 @@
 
 namespace App\Traits;
 
-use App\Models\BaseModel;
-use App\Models\User;
+use App\Models\Auth\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @mixin BaseModel
+ * @mixin \App\Models\Model
  */
 trait HasSoftDeleteBy
 {
     use SoftDeletes;
 
-    /**
-     * @return BelongsTo
-     */
     public function deletedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, self::DELETED_BY)->withTrashed();
+        return $this->belongsTo(User::class, self::DELETED_BY)->withTrashed(); // @phpstan-ignore-line
     }
 }

@@ -2,27 +2,21 @@
 
 namespace App\Traits;
 
-use App\Models\User;
+use App\Models\Auth\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @mixin \App\Models\BaseModel
+ * @mixin \App\Models\Model
  */
 trait HasTimestampsBy
 {
-    /**
-     * @return BelongsTo
-     */
     public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, self::CREATED_BY)->withTrashed();
+        return $this->belongsTo(User::class, self::CREATED_BY)->withTrashed(); // @phpstan-ignore-line
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function updatedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, self::UPDATED_BY)->withTrashed();
+        return $this->belongsTo(User::class, static::UPDATED_BY)->withTrashed(); // @phpstan-ignore-line
     }
 }
