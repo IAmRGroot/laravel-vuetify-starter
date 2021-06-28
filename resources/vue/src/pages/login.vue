@@ -2,26 +2,28 @@
     <v-container>
         <v-row justify="center">
             <v-card width="400">
-                <v-row>
-                    <v-col cols="12">
-                        <label for="login">Username:</label>
-                    </v-col>
-                    <v-col cols="12">
-                        <input type="text" name="login" v-model="login" style="outline: auto;">
-                    </v-col>
-                    <v-col cols="12">
-                        <label for="password">Password:</label>
-                    </v-col>
-                    <v-col cols="12">
-                        <input type="password" name="password" v-model="password" style="outline: auto;">
-                    </v-col>
-                    <v-col cols="12">
-                        <button style="outline: auto;" @click="doLogin">Login</button>
-                    </v-col>
-                    <v-col cols="12">
-                        {{ error }}
-                    </v-col>
-                </v-row>
+                <v-card-text>
+                    <v-row>
+                        <v-col cols="12">
+                            <label for="login">Username:</label>
+                        </v-col>
+                        <v-col cols="12">
+                            <input type="text" name="login" v-model="email" style="outline: auto;">
+                        </v-col>
+                        <v-col cols="12">
+                            <label for="password">Password:</label>
+                        </v-col>
+                        <v-col cols="12">
+                            <input type="password" name="password" v-model="password" style="outline: auto;">
+                        </v-col>
+                        <v-col cols="12">
+                            <button style="outline: auto;" @click="doLogin">Login</button>
+                        </v-col>
+                        <v-col cols="12">
+                            {{ error }}
+                        </v-col>
+                    </v-row>
+                </v-card-text>
             </v-card>
         </v-row>
     </v-container>
@@ -37,7 +39,7 @@
         url: string;
     };
 
-    const login = ref('');
+    const email = ref('');
     const password = ref('');
     const error = ref('');
 
@@ -49,7 +51,7 @@
             await get('/async/csrf');
 
             const data = await post<LoginResponse>('/async/login', {
-                login: login.value,
+                email: email.value,
                 password: password.value,
             });
 
@@ -65,7 +67,7 @@
         try {
             await getUser();
 
-            push('/');
+            push({path: '', force: true});
         } catch (error) {
             // Nothing
         }
