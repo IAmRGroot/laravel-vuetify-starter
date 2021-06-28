@@ -13,7 +13,7 @@
                         <label for="password">Password:</label>
                     </v-col>
                     <v-col cols="12">
-                        <input type="password" name="password" v-model="login" style="outline: auto;">
+                        <input type="password" name="password" v-model="password" style="outline: auto;">
                     </v-col>
                     <v-col cols="12">
                         <button style="outline: auto;" @click="doLogin">Login</button>
@@ -36,9 +36,6 @@
     type LoginResponse = {
         url: string;
     };
-    type TokenResponse = {
-        url: string;
-    };
 
     const login = ref('');
     const password = ref('');
@@ -48,18 +45,17 @@
 
     const doLogin = async () => {
         try {
+            // Adds csrf cookie to subsequent requests.
             await get('/async/csrf');
 
             const data = await post<LoginResponse>('/async/login', {
-                login: login,
-                password: password,
+                login: login.value,
+                password: password.value,
             });
 
             push(data.url);
-        } catch (error) {
-            console.log(error);
-            
-            error.value = error;
+        } catch (fetch_error) {
+            error.value = fetch_error;
         }
     }
 

@@ -5,6 +5,7 @@ const default_init = {
     },
     credentials: 'include',
 } as RequestInit
+
 const prefix = import.meta.env.VITE_APP_URL;
 
 const getUrl = (url: string): string => {
