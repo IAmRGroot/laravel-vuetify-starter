@@ -1,8 +1,6 @@
 import { computed, reactive, toRefs } from "vue";
-import { useRouter } from "vue-router";
 import { get } from "../plugins/fetch";
-
-type User = {};
+import type { User } from "../types/user";
 
 const state = reactive({
     user: null as User|null

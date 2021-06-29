@@ -8,11 +8,11 @@ const router = createRouter({
 
 router.beforeEach((to, from, next): void => {
     // TODO check logged in 
-    const logged_in = false;
+    // const logged_in = false;
 
-    if (to.meta.auth === true && ! logged_in) {
-        next('/login');
-    }
+    // if (to.meta.auth === true && ! logged_in) {
+    //     next('/login');
+    // }
 
     next();
 });

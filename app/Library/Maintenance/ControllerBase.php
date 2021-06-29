@@ -3,6 +3,8 @@
 namespace App\Library\Maintenance;
 
 use App\Http\Controllers\Controller;
+use App\Library\Maintenance\Fields\Field;
+use App\Library\Maintenance\Fields\IdField;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -20,13 +22,17 @@ abstract class ControllerBase extends Controller
     protected string $permission_name = '_maintenance';
 
     protected Model $instance;
-    protected Table $table;
 
     public function __construct()
     {
         $model_name     = $this->model;
         $this->instance = new $model_name();
     }
+
+    /**
+     * @return Collection|Field[]
+     */
+    abstract protected function getFields(): Collection;
 
     public function routes(): void
     {
@@ -47,7 +53,7 @@ abstract class ControllerBase extends Controller
     public function vueData(): array
     {
         return [
-            $this->getName() => $this->table->toArray(),
+            $this->getName() => $this->getAllFields()->map->toArray(),
         ];
     }
 
@@ -70,7 +76,7 @@ abstract class ControllerBase extends Controller
     public function put(MaintenanceRequest $request): array
     {
         $new = $this->instance->newInstance([
-            $request->data($this->table),
+            $request->data($this->getAllFields(false)),
         ]);
 
         $new->save();
@@ -85,15 +91,37 @@ abstract class ControllerBase extends Controller
     {
         $existing = $this->instance->query()->findOrFail($model);
 
-        $existing->fill($request->data($this->table));
+        $existing->fill($request->data($this->getAllFields(false)));
 
         $existing->save();
 
         return $this->formatClosure()($existing);
     }
 
+    /**
+     * @return Collection|Field[]
+     */
+    private function getAllFields(bool $include_primary_key = true): Collection
+    {
+        $fields = $this->getFields();
+
+        if (
+            $include_primary_key
+            && ! $fields->contains(fn (Field $field): bool => $field->column === $this->instance->getKeyName())
+        ) {
+            $fields->prepend(new IdField($this->instance->getKeyName()));
+        }
+
+        return $fields;
+    }
+
     protected function formatClosure(): Closure
     {
-        return fn (Model $model): array => $model->only(($this->table->columns->map->column)->toArray());
+        return fn (Model $model): array => $model->only(
+            array_filter(
+                ($this->getAllFields()->map->column)->toArray(),
+                fn (string $column) => ! in_array($column, $model->getHidden())
+            )
+        );
     }
 }

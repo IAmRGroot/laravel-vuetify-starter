@@ -2,17 +2,19 @@
 
 namespace App\Library\Maintenance;
 
+use App\Library\Maintenance\Fields\Field;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Collection;
 
 class MaintenanceRequest extends FormRequest
 {
     /**
-     * @param Table $table
+     * @param Collection|Field[] $fields
      *
      * @return array<string, mixed>
      */
-    public function data(Table $table): array
+    public function data(Collection $fields): array
     {
-        return $this->only($table->columns->map->column);
+        return $this->only($fields->map->column);
     }
 }
