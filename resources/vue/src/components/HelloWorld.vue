@@ -19,7 +19,7 @@
 
                         <small>Vite Preview</small>
                     </v-col>
-                    
+
                     <v-col cols="12">
                         <button @click="count++">
                             Counter with value: {{ count }}
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, ref } from 'vue'
+import { defineProps, ref } from 'vue';
 
 import logo from '../assets/logo.svg';
 
@@ -40,10 +40,10 @@ defineProps({
     msg: {
         type: String,
         default: '',
-    }
-})
+    },
+});
 
-const count = ref(0)
+const count = ref(0);
 </script>
 
 <style scoped>

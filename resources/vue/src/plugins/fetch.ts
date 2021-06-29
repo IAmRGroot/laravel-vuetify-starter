@@ -22,7 +22,7 @@ export const get = async <T>(url: string, init: RequestInit = {}): Promise<T> =>
     );
 }
 
-export const post = async <T>(url: string, body: any, init: RequestInit = {}): Promise<T> => {
+export const post = async <T>(url: string, body: unknown, init: RequestInit = {}): Promise<T> => {
     return handleResponse<T>(
         await fetch(getUrl(url), {
             method: 'POST',
@@ -33,7 +33,7 @@ export const post = async <T>(url: string, body: any, init: RequestInit = {}): P
     );
 }
 
-export const put = async <T>(url: string, body: any, init: RequestInit = {}): Promise<T> => {
+export const put = async <T>(url: string, body: unknown, init: RequestInit = {}): Promise<T> => {
     return handleResponse<T>(
         await fetch(getUrl(url), {
             method: 'PUT',

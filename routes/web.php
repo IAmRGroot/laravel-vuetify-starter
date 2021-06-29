@@ -10,4 +10,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('*', [VueController::class, 'page']);
+$skipped_prefixes = ['api\/', 'async\/',];
+$skipped_prefixes = implode('|', $skipped_prefixes);
+
+Route::get('/{route?}', [VueController::class, 'page'])
+    ->where('route', "^(?!({$skipped_prefixes})).*$")
+    ->name('home');

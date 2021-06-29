@@ -1,2 +1,5 @@
+export type LoginResponse = {
+    url: string;
+};
 
-export type User = {};
+export type User = Record<string, unknown>;

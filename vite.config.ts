@@ -7,6 +7,8 @@ import eslintPlugin from 'vite-plugin-eslint';
 const public_routes = [
     /^\/login$/,
 ];
+const src = '.';
+
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
@@ -26,10 +28,11 @@ export default defineConfig({
               },
         }),
         // TODO
-        // eslintPlugin({
-        //     // fix: ! import.meta.env.PROD
-        //     fix: true
-        // }),
+        eslintPlugin({
+            cache: false,
+            fix: true,
+            include: [`${src}/**/*.js`, `${src}/**/*.jsx`, `${src}/**/*.ts`, `${src}/**/*.tsx`, `${src}/**/*.vue`]
+        }),
         copy({
             targets: [
                 { src: 'resources/vue/dist/*', dest: 'public/vue' },

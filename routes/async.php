@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Maintenance\MaintenanceController;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 
@@ -27,3 +28,11 @@ Route::middleware('auth')->group(static function (): void {
 
     MaintenanceController::routes();
 });
+
+
+/*
+ * 404 all other routes
+ */
+Route::any('/{route?}', static function (): void {
+    abort(Response::HTTP_NOT_FOUND);
+})->where('route', '^.+$');
