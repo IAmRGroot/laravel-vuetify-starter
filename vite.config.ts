@@ -7,7 +7,6 @@ import eslintPlugin from 'vite-plugin-eslint';
 const public_routes = [
     /^\/login$/,
 ];
-const src = '.';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -27,11 +26,10 @@ export default defineConfig({
                 };
               },
         }),
-        // TODO
         eslintPlugin({
-            cache: false,
-            fix: true,
-            include: [`${src}/**/*.js`, `${src}/**/*.jsx`, `${src}/**/*.ts`, `${src}/**/*.tsx`, `${src}/**/*.vue`]
+            // TODO
+            // fix: true,
+            include: ['./**/*.js', './**/*.jsx', './**/*.ts', './**/*.tsx', './**/*.vue']
         }),
         copy({
             targets: [
@@ -40,7 +38,11 @@ export default defineConfig({
         }),
     ],
     root: 'resources/vue',
-    base: '/',
+    build: {
+        // TODO
+        // outDir: '../../public/vue',
+    },
+    base: '/vue/',
     server: {
         host: '0.0.0.0',
     },

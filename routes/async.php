@@ -29,7 +29,6 @@ Route::middleware('auth')->group(static function (): void {
     MaintenanceController::routes();
 });
 
-
 /*
  * 404 all other routes
  */

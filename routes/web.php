@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-$skipped_prefixes = ['api\/', 'async\/',];
+$skipped_prefixes = ['api\/', 'async\/', 'assets\/'];
 $skipped_prefixes = implode('|', $skipped_prefixes);
 
 Route::get('/{route?}', [VueController::class, 'page'])

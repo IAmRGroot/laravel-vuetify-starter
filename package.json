@@ -4,7 +4,7 @@
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
-    "watch": "vite build --mode=development --outDir=public/vue --watch",
+    "watch": "vite build --mode=development --watch",
     "dev": "vite"
   },
   "dependencies": {
