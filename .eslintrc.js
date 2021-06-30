@@ -21,5 +21,6 @@ module.exports = {
     rules: {
         'vue/html-indent': ['error', 4],
         "@typescript-eslint/no-unused-vars": ['off'],
+        'no-trailing-spaces': ['error'],
     },
 };

@@ -56,32 +56,27 @@ const password = ref('');
 const error = ref('');
 
 const { push } = useRouter();
+const { is_authenticated, next_route, } = useAuth();
 
 const doLogin = async () => {
     try {
         // Adds csrf cookie to subsequent requests.
         await get('/async/csrf');
 
-        const data = await post<LoginResponse>('/async/login', {
+        await post<LoginResponse>('/async/login', {
             email: email.value,
             password: password.value,
         });
 
-        push(data.url);
+        push(next_route.value ?? '/');
     } catch (fetch_error) {
         error.value = fetch_error;
     }
 }
 
 const checkAuth = async () => {
-    const { getUser } = useAuth();
-
-    try {
-        await getUser();
-
-        push({path: '', force: true});
-    } catch (error) {
-        // Nothing
+    if (is_authenticated.value) {
+        push({ name: 'index' });
     }
 }
 

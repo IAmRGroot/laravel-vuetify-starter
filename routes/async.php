@@ -24,6 +24,7 @@ Route::get('csrf', [CsrfCookieController::class, 'show'])->name('csrf');
 */
 
 Route::middleware('auth')->group(static function (): void {
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('user', [LoginController::class, 'user'])->name('user');
 
     MaintenanceController::routes();

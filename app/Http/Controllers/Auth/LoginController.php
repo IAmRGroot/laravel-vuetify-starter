@@ -23,7 +23,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request, User $user): JsonResponse
     {
         return response()->json(
-            ['url' => redirect()->intended($this->redirectPath())->getTargetUrl()],
+            ['message' => 'ok'],
             Response::HTTP_OK
         );
     }
