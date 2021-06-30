@@ -5,7 +5,9 @@
     "serve": "vite preview",
     "build": "vite build",
     "watch": "vite build --mode=development --watch",
-    "dev": "vite"
+    "dev": "vite",
+    "lint": "eslint --fix resources/vue/src/**/*.ts resources/vue/src/**/*.vue",
+    "lint-dry": "eslint --fix-dry-run resources/vue/src/**/*.ts resources/vue/src/**/*.vue"
   },
   "dependencies": {
     "@mdi/font": "^5.9.55",

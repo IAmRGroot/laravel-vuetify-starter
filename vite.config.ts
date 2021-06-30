@@ -37,7 +37,7 @@ export default ({ mode }: UserConfig ): UserConfigExport => {
             }),
             eslintPlugin({
                 fix: ! prod,
-                include: ['./**/*.js', './**/*.jsx', './**/*.ts', './**/*.tsx', './**/*.vue']
+                include: ['./**/*.ts', './**/*.vue']
             }),
             copy({
                 targets: ! prod ? [] : [

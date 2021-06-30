@@ -6,8 +6,9 @@ module.exports = {
         node: true,
     },
     ignorePatterns: [
-        'resources/ts/dist/*',
-        '*.svg'
+        'resources/vue/dist/*',
+        '*.svg',
+        'node_modules'
     ],
     extends: [
         'plugin:vue/vue3-recommended',
@@ -20,6 +21,7 @@ module.exports = {
     },
     rules: {
         'vue/html-indent': ['error', 4],
+        'vue/block-tag-newline': ['error'],
         "@typescript-eslint/no-unused-vars": ['off'],
         'no-trailing-spaces': ['error'],
     },
