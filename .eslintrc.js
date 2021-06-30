@@ -31,9 +31,6 @@ module.exports = {
         'vue/no-empty-component-block': ['error'],
         'vue/no-multiple-objects-in-class': ['error'],
         'vue/no-reserved-component-names': ['error', { disallowVue3BuiltInComponents: true}],
-        'vue/no-unregistered-components': ['error', {
-            'ignorePatterns': ['v-.+']
-        }],
         'vue/no-unused-properties': ['error'],
         'vue/no-unused-refs': ['error'],
         'vue/no-useless-mustaches': ['error'],
