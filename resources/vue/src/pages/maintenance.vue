@@ -53,8 +53,6 @@
     </template>
 </template>
 
-<script lang="ts"></script>
-
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useMaintenance } from "../compositions/maintenance";
