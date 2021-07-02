@@ -20,7 +20,7 @@ services:
   laravel:
     container_name: ${APP_NAME}-laravel
     image: xolvionl/laravel:${XOLVIO_DOCKER_TAG:-minimal-8.0}
-    user: ${UID}
+    user: "${UID}"
     command: php-fpm -F
     hostname: ${APP_NAME}
     depends_on:
@@ -34,9 +34,17 @@ services:
     networks: 
       - traefik_default
     volumes:
-      - ./:/var/www
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
+      - type: bind
+        source: ./
+        target: /var/www
+      - type: bind
+        source: /etc/passwd
+        target: /etc/passwd
+        read_only: true
+      - type: bind
+        source: /etc/group
+        target: /etc/group
+        read_only: true
 
   laravel-nginx:
     container_name: ${APP_NAME}-laravel-nginx
@@ -50,8 +58,12 @@ services:
       - TZ=${TZ}
       - APP_NAME=${APP_NAME}
     volumes:
-      - ./:/var/www
-      - ./nginx:/etc/nginx/templates/
+      - type: bind
+        source: ./
+        target: /var/www
+      - type: bind
+        source: ./nginx
+        target: /etc/nginx/templates/
     networks: 
       - traefik_default
     labels:
