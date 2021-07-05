@@ -55,7 +55,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { useMaintenance } from "../compositions/maintenance";
+import { useMaintenance } from "../compositions/maintenance/maintenance";
 import type { Row } from "../types/maintenance";
 
 const {

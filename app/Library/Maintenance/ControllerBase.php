@@ -41,19 +41,22 @@ abstract class ControllerBase extends Controller
             ->name("{$this->getName()}.")
             ->group(static function (): void {
                 Route::get('', [static::class, 'get'])->name('get');
-                Route::put('put', [static::class, 'put'])->name('put');
-                Route::patch('{model}/patch', [static::class, 'patch'])->name('patch');
-                Route::delete('{model}/delete', [static::class, 'delete'])->name('delete');
+                Route::put('', [static::class, 'put'])->name('put');
+                Route::patch('{model}', [static::class, 'patch'])->name('patch');
+                Route::delete('{model}', [static::class, 'delete'])->name('delete');
             });
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, array<string, mixed>>
      */
     public function vueData(): array
     {
         return [
-            $this->getName() => $this->getAllFields()->map->toArray(),
+            $this->getName() => [
+                'fields' => $this->getAllFields()->map->toArray(),
+                'key_name' => $this->instance->getKeyName(),
+            ],
         ];
     }
 

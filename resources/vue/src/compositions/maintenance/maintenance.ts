@@ -1,6 +1,6 @@
 import { computed, reactive, toRefs, watch } from "vue";
-import { get } from "../plugins/fetch";
-import type { Field, Row, Setup } from "../types/maintenance";
+import { get } from "../../plugins/fetch";
+import type { Field, Row, Setup } from "../../types/maintenance";
 
 const state = reactive({
     setup: {} as Setup,
@@ -14,7 +14,7 @@ const fetchSetup = async (): Promise<void> => {
 
 const has_selected_table = computed((): boolean => state.current_table !== '');
 const tables = computed((): string[] => Object.keys(state.setup));
-const fields = computed((): Field[] => has_selected_table.value ? state.setup[state.current_table] : []);
+const fields = computed((): Field[] => has_selected_table.value ? state.setup[state.current_table].fields : []);
 const visible_fields = computed((): Field[] => fields.value.filter(item => item.visible));
 const editable_fields = computed((): Field[] => fields.value.filter(item => item.editable));
 
