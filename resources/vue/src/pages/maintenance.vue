@@ -2,16 +2,16 @@
     <v-row>
         <v-col
             v-for="table in tables"
-            :key="table"
+            :key="table.table"
             no-gutters
         >
             <v-btn @click="current_table = table">
-                {{ table }}
+                {{ table.table }}
             </v-btn>
         </v-col>
     </v-row>
 
-    <template v-if="!editing_row">
+    <template v-if="!current_row">
         <v-row>
             <v-col
                 v-for="field in visible_fields"
@@ -34,7 +34,7 @@
             </v-col>
 
             <v-col>
-                <v-btn @click="editing_row = { ...row }">
+                <v-btn @click="current_row_index = index">
                     Edit
                 </v-btn>
             </v-col>
@@ -47,7 +47,7 @@
             :key="`edit-${field.text}`"
         >
             <v-col>{{ field.text }}</v-col>
-            <v-col>{{ editing_row[field.value] }}</v-col>
+            <v-col>{{ current_row[field.value] }}</v-col>
             <v-col>{{ field.component }}</v-col>
         </v-row>
     </template>
@@ -56,6 +56,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useMaintenance } from "../compositions/maintenance/maintenance";
+import { useMaintenanceEdit } from "../compositions/maintenance/maintenance_edit";
 import type { Row } from "../types/maintenance";
 
 const {
@@ -67,7 +68,7 @@ const {
     fetchSetup,
 } = useMaintenance();
 
-const editing_row = ref(null as Row|null);
+const { current_row, current_row_index, } = useMaintenanceEdit();
 
 void fetchSetup();
 </script>

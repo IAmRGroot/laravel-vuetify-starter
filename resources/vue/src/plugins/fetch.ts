@@ -44,6 +44,17 @@ export const put = async <T>(url: string, body: unknown, init: RequestInit = {})
     );
 }
 
+export const patch = async <T>(url: string, body: unknown, init: RequestInit = {}): Promise<T> => {
+    return handleResponse<T>(
+        await fetch(getUrl(url), {
+            method: 'PATCH',
+            body: JSON.stringify(body),
+            ...default_init,
+            ...init
+        })
+    );
+}
+
 export const _delete = async <T>(url: string, init: RequestInit = {}): Promise<T> => {
     return handleResponse<T>(
         await fetch(getUrl(url), {

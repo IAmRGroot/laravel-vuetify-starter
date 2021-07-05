@@ -6,15 +6,11 @@ export type Field = {
     component: string;
 };
 
-export type TableSetup = {
+export type Table = {
     table: string,
     key_name: string,
     fields: Field[],
 };
-
-export type Setup = {
-    [table: string]: TableSetup;
-}
 
 export type Row = {
     [column: string]: unknown;

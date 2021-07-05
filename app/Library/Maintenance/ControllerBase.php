@@ -54,7 +54,7 @@ abstract class ControllerBase extends Controller
     {
         return [
             $this->getName() => [
-                'fields' => $this->getAllFields()->map->toArray(),
+                'fields'   => $this->getAllFields()->map->toArray(),
                 'key_name' => $this->instance->getKeyName(),
             ],
         ];
