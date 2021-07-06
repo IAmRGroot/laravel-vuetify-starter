@@ -5,6 +5,7 @@ namespace App\Library\Maintenance;
 use App\Http\Controllers\Controller;
 use App\Library\Maintenance\Fields\Field;
 use App\Library\Maintenance\Fields\IdField;
+use App\Library\Maintenance\Fields\RelationField;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -70,7 +71,10 @@ abstract class ControllerBase extends Controller
      */
     public function get(): Collection
     {
-        return $this->instance->all()->map(fn ($model) => $this->formatClosure()($model));
+        return $this->instance->query()
+            ->with($this->getRelations())
+            ->get()
+            ->map(fn ($model) => $this->formatClosure()($model));
     }
 
     /**
@@ -122,7 +126,19 @@ abstract class ControllerBase extends Controller
     {
         return fn (Model $model): array => Arr::only(
             $model->toArray(),
-            ($this->getAllFields()->map->column)->toArray()
+            array_merge($this->getRelations(), $this->getAllFields()->map->column->toArray())
         );
+    }
+
+    /**
+     * @return string[] 
+     */
+    protected function getRelations(): array
+    {
+        return $this->getFields()
+            ->filter(fn(Field $field): bool => $field instanceof RelationField)
+            ->values()
+            ->map(fn(RelationField $field): string => $field->relation)
+            ->toArray();
     }
 }

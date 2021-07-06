@@ -9,12 +9,12 @@ use Illuminate\Support\Collection;
 
 class RoleController extends ControllerBase
 {
-    protected string $model     = Role::class;
+    protected string $model = Role::class;
 
     public function getFields(): Collection
     {
         return collect([
-            Text::make('name'),
+            new Text('name'),
         ]);
     }
 }

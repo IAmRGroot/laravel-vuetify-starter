@@ -6,13 +6,11 @@ use App\Traits\HasMake;
 
 abstract class Field
 {
-    use HasMake;
-
     protected bool $editable    = true;
     protected bool $visible     = true;
     protected string $component = 'TextInput';
 
-    final public function __construct(
+    public function __construct(
         public string $column
     ) {
     }
