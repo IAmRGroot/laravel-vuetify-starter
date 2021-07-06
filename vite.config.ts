@@ -43,7 +43,7 @@ export default ({mode, command}: ConfigEnv ): UserConfigExport => {
     ];
 
     if (prod) {
-        plugins.push(compression({filter: (): boolean => true}));
+        plugins.push(compression());
         plugins.push({
             ...copy({
                 targets: [
@@ -51,6 +51,7 @@ export default ({mode, command}: ConfigEnv ): UserConfigExport => {
                 ],
                 overwrite: true,
                 hook: 'writeBundle',
+                preserveTimestamps: true,
             }),
             enforce: 'post',
         });
@@ -61,6 +62,7 @@ export default ({mode, command}: ConfigEnv ): UserConfigExport => {
         root: 'resources/vue',
         build: prod ? {} : {
             outDir: '../../public/vue',
+            brotliSize: false,
         },
         base: dev_server ? '/' : '/vue/',
         server: {

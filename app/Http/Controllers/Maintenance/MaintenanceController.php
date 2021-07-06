@@ -9,17 +9,14 @@ use Illuminate\Support\Facades\Route;
 class MaintenanceController extends Controller
 {
     /**
-     * @return array<string, array<int, mixed>>
+     * @return array<string, array<string, mixed>>
      */
     public function maintenance(): array
     {
-        /** @var array<int, array<string, mixed>> $tables */
-        $tables = array_map(
+        return array_map(
             fn (ControllerBase $controller): array => $controller->vueData(),
             self::getControllers()
         );
-
-        return array_merge(...$tables);
     }
 
     public static function routes(): void

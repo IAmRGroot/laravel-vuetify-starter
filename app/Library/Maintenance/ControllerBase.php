@@ -7,6 +7,7 @@ use App\Library\Maintenance\Fields\Field;
 use App\Library\Maintenance\Fields\IdField;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -48,15 +49,14 @@ abstract class ControllerBase extends Controller
     }
 
     /**
-     * @return array<string, array<string, mixed>>
+     * @return array<string, mixed>
      */
     public function vueData(): array
     {
-        return [
-            $this->getName() => [
-                'fields'   => $this->getAllFields()->map->toArray(),
-                'key_name' => $this->instance->getKeyName(),
-            ],
+        return[
+            'table' => $this->getName(),
+            'fields'   => $this->getAllFields()->map->toArray(),
+            'key_name' => $this->instance->getKeyName(),
         ];
     }
 
@@ -120,11 +120,9 @@ abstract class ControllerBase extends Controller
 
     protected function formatClosure(): Closure
     {
-        return fn (Model $model): array => $model->only(
-            array_filter(
-                ($this->getAllFields()->map->column)->toArray(),
-                fn (string $column) => ! in_array($column, $model->getHidden())
-            )
+        return fn (Model $model): array => Arr::only(
+            $model->toArray(),
+            ($this->getAllFields()->map->column)->toArray()
         );
     }
 }

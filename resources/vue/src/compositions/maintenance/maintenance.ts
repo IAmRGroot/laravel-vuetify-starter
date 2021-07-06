@@ -13,12 +13,11 @@ const fetchSetup = async (): Promise<void> => {
 }
 
 const fetchRows = async (): Promise<void> => {
-    state.rows = await get<Row[]>(`/async/maintenance/${state.current_table}`)
+    state.rows = await get<Row[]>(`/async/maintenance/${state.current_table?.table}`)
 };
 
 watch(() => state.current_table, () => fetchRows());
 
-const has_selected_table = computed((): boolean => state.current_table !== null);
 const fields = computed((): Field[] => state.current_table !== null ? state.current_table.fields : []);
 const visible_fields = computed((): Field[] => fields.value.filter(item => item.visible));
 const editable_fields = computed((): Field[] => fields.value.filter(item => item.editable));

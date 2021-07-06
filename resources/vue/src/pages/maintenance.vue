@@ -42,6 +42,11 @@
     </template>
 
     <template v-else>
+        <v-row>
+            <v-btn @click="current_row_index = -1">
+                Back
+            </v-btn>
+        </v-row>
         <v-row
             v-for="field in editable_fields"
             :key="`edit-${field.text}`"
@@ -57,7 +62,6 @@
 import { ref } from "vue";
 import { useMaintenance } from "../compositions/maintenance/maintenance";
 import { useMaintenanceEdit } from "../compositions/maintenance/maintenance_edit";
-import type { Row } from "../types/maintenance";
 
 const {
     current_table,
