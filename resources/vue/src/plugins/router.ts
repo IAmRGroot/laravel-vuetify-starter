@@ -11,7 +11,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next): Promise<void> => {
-    if (! to.meta.auth) {
+    if (!to.meta.auth) {
         next();
         return;
     }
@@ -23,7 +23,7 @@ router.beforeEach(async (to, from, next): Promise<void> => {
         fetchUser,
     } = useAuth();
 
-    if (! first_check_done.value) {
+    if (!first_check_done.value) {
         try {
             await fetchUser();
         } catch (error) {
@@ -31,7 +31,7 @@ router.beforeEach(async (to, from, next): Promise<void> => {
         }
     }
 
-    if (! is_authenticated.value) {
+    if (!is_authenticated.value) {
         next_route.value = to.fullPath;
 
         next('/login');

@@ -10,7 +10,7 @@ const public_routes = [
 ];
 
 // https://vitejs.dev/config/
-export default ({mode, command}: ConfigEnv ): UserConfigExport => {
+export default ({ mode, command }: ConfigEnv): UserConfigExport => {
     // If you need env
     // process.env = {...process.env, ...loadEnv(mode, process.cwd())};
 
@@ -37,8 +37,8 @@ export default ({mode, command}: ConfigEnv ): UserConfigExport => {
             },
         }),
         eslintPlugin({
-            fix: ! prod,
-            include: ['./**/*.ts', './**/*.vue']
+            fix: !prod,
+            include: ['./**/*.ts', './**/*.vue'],
         }),
     ];
 
@@ -47,7 +47,10 @@ export default ({mode, command}: ConfigEnv ): UserConfigExport => {
         plugins.push({
             ...copy({
                 targets: [
-                    { src: 'resources/vue/dist/*', dest: 'public/vue' },
+                    {
+                        src: 'resources/vue/dist/*',
+                        dest: 'public/vue',
+                    },
                 ],
                 overwrite: true,
                 hook: 'writeBundle',
@@ -65,8 +68,6 @@ export default ({mode, command}: ConfigEnv ): UserConfigExport => {
             brotliSize: false,
         },
         base: dev_server ? '/' : '/vue/',
-        server: {
-            host: '0.0.0.0',
-        },
+        server: { host: '0.0.0.0' },
     });
 };

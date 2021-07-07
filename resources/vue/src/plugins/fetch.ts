@@ -4,7 +4,7 @@ const default_init = {
         'Accept': 'application/json',
     },
     credentials: 'include',
-} as RequestInit
+} as RequestInit;
 
 const prefix = import.meta.env.VITE_APP_URL;
 
@@ -17,10 +17,10 @@ export const get = async <T>(url: string, init: RequestInit = {}): Promise<T> =>
         await fetch(getUrl(url), {
             method: 'GET',
             ...default_init,
-            ...init
-        })
+            ...init,
+        }),
     );
-}
+};
 
 export const post = async <T>(url: string, body: unknown = {}, init: RequestInit = {}): Promise<T> => {
     return handleResponse<T>(
@@ -28,10 +28,10 @@ export const post = async <T>(url: string, body: unknown = {}, init: RequestInit
             method: 'POST',
             body: JSON.stringify(body),
             ...default_init,
-            ...init
-        })
+            ...init,
+        }),
     );
-}
+};
 
 export const put = async <T>(url: string, body: unknown, init: RequestInit = {}): Promise<T> => {
     return handleResponse<T>(
@@ -39,10 +39,10 @@ export const put = async <T>(url: string, body: unknown, init: RequestInit = {})
             method: 'PUT',
             body: JSON.stringify(body),
             ...default_init,
-            ...init
-        })
+            ...init,
+        }),
     );
-}
+};
 
 export const patch = async <T>(url: string, body: unknown, init: RequestInit = {}): Promise<T> => {
     return handleResponse<T>(
@@ -50,20 +50,20 @@ export const patch = async <T>(url: string, body: unknown, init: RequestInit = {
             method: 'PATCH',
             body: JSON.stringify(body),
             ...default_init,
-            ...init
-        })
+            ...init,
+        }),
     );
-}
+};
 
 export const _delete = async <T>(url: string, init: RequestInit = {}): Promise<T> => {
     return handleResponse<T>(
         await fetch(getUrl(url), {
             method: 'DELETE',
             ...default_init,
-            ...init
-        })
+            ...init,
+        }),
     );
-}
+};
 
 async function handleResponse<T>(response: Response): Promise<T> {
     let json;
@@ -75,7 +75,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
     }
 
     if (!response.ok) {
-        const error = (json && json.message) || response.statusText;
+        const error = json && json.message || response.statusText;
 
         return Promise.reject(error);
     }

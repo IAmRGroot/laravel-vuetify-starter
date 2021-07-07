@@ -45,18 +45,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { get, post } from '../plugins/fetch';
 import { useAuth } from '../compositions/auth';
-import type { LoginResponse } from "../types/user";
+import type { LoginResponse } from '../types/user';
 
 const email = ref('');
 const password = ref('');
 const error = ref('');
 
 const { push } = useRouter();
-const { is_authenticated, next_route, } = useAuth();
+const { is_authenticated, next_route } = useAuth();
 
 const doLogin = async () => {
     try {
@@ -72,13 +72,13 @@ const doLogin = async () => {
     } catch (fetch_error) {
         error.value = fetch_error;
     }
-}
+};
 
 const checkAuth = async () => {
     if (is_authenticated.value) {
         push({ name: 'index' });
     }
-}
+};
 
 void checkAuth();
 </script>

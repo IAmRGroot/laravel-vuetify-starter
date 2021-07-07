@@ -59,9 +59,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-import { useMaintenance } from "../compositions/maintenance/maintenance";
-import { useMaintenanceEdit } from "../compositions/maintenance/maintenance_edit";
+import { useMaintenance } from '../compositions/maintenance/maintenance';
+import { useMaintenanceEdit } from '../compositions/maintenance/maintenance_edit';
 
 const {
     current_table,
@@ -72,7 +71,7 @@ const {
     fetchSetup,
 } = useMaintenance();
 
-const { current_row, current_row_index, } = useMaintenanceEdit();
+const { current_row, current_row_index } = useMaintenanceEdit();
 
 void fetchSetup();
 </script>

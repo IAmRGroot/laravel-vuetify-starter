@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useAuth } from "../compositions/auth";
+import { useAuth } from '../compositions/auth';
 
 const { logout } = useAuth();
 </script>
