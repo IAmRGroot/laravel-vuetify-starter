@@ -2,7 +2,7 @@
 
 namespace App\Library\Maintenance\Fields;
 
-use App\Traits\HasMake;
+use App\Enums\FieldType;
 
 abstract class Field
 {
@@ -35,6 +35,7 @@ abstract class Field
     public function toArray(): array
     {
         return [
+            'type'      => FieldType::COLUMN,
             'value'     => $this->column,
             'text'      => $this->getText(),
             'visible'   => $this->visible,

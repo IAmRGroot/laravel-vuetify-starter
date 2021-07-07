@@ -8,7 +8,6 @@ use App\Library\Maintenance\Fields\IdField;
 use App\Library\Maintenance\Fields\RelationField;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -54,8 +53,8 @@ abstract class ControllerBase extends Controller
      */
     public function vueData(): array
     {
-        return[
-            'table' => $this->getName(),
+        return [
+            'table'    => $this->getName(),
             'fields'   => $this->getAllFields()->map->toArray(),
             'key_name' => $this->instance->getKeyName(),
         ];
@@ -124,21 +123,21 @@ abstract class ControllerBase extends Controller
 
     protected function formatClosure(): Closure
     {
-        return fn (Model $model): array => Arr::only(
-            $model->toArray(),
-            array_merge($this->getRelations(), $this->getAllFields()->map->column->toArray())
+        return fn (Model $model): array => array_merge(
+            $model->only($this->getAllFields()->map->column->toArray()),
+            $model->getRelations(),
         );
     }
 
     /**
-     * @return string[] 
+     * @return string[]
      */
     protected function getRelations(): array
     {
         return $this->getFields()
-            ->filter(fn(Field $field): bool => $field instanceof RelationField)
+            ->filter(fn (Field $field): bool => $field instanceof RelationField)
             ->values()
-            ->map(fn(RelationField $field): string => $field->relation)
+            ->map(fn (RelationField $field): string => $field->relation)
             ->toArray();
     }
 }

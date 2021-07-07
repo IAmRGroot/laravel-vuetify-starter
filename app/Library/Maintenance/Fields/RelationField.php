@@ -2,30 +2,53 @@
 
 namespace App\Library\Maintenance\Fields;
 
+use App\Exceptions\IncorrectSetupException;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
-class RelationField extends Field
+abstract class RelationField extends Field
 {
-    public string $key;
+    protected string $relation_key;
+    protected string $relation_value;
 
-    /**
-     * @param Model $model 
-     * @param string $relation 
-     * @param string $description_column 
-     */
     public function __construct(
-        protected Model $model,
+        protected Model $instance,
         public string $relation,
         protected string $description_column,
     ) {
-        $relation_instance = $model->{$relation}();
+        parent::__construct($relation);
 
-        if ($relation_instance instanceof BelongsTo) {
-            parent::__construct($relation_instance->getForeignKeyName());
-            $this->key = $relation_instance->getOwnerKeyName();
+        $class_name = $instance::class;
+
+        if (! method_exists($instance, $relation)) {
+            throw new IncorrectSetupException("Relation {$relation} not found on model {$class_name}");
         }
+
+        $relation_instance = $instance->{$relation}();
+
+        if (! is_a($relation_instance, $this->getRelationClass())) {
+            throw new IncorrectSetupException("Relation {$relation} on {$class_name} is not a {$this->getRelationClass()}");
+        }
+
+        $this->relation_key   = $this->getKey($relation_instance);
+        $this->relation_value = $this->getRelationValue($relation_instance);
     }
+
+    abstract protected function getRelationClass(): string;
+
+    /**
+     * @param Relation $relation
+     *
+     * @return string
+     */
+    abstract protected function getKey($relation): string;
+
+    /**
+     * @param Relation $relation
+     *
+     * @return string
+     */
+    abstract protected function getRelationValue($relation): string;
 
     /**
      * @return array<string, mixed>
@@ -34,7 +57,12 @@ class RelationField extends Field
     {
         return array_merge(
             parent::toArray(),
-            ['value' => "{$this->column}.{$this->key}"],
+            [
+                'relation'       => $this->relation,
+                'relation_key'   => $this->relation_key,
+                'relation_value' => $this->relation_value,
+                'relation_text'  => $this->description_column,
+            ],
         );
     }
 }
