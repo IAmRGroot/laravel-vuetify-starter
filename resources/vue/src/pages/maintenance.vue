@@ -11,35 +11,27 @@
         </v-col>
     </v-row>
 
-    <template v-if="!current_row">
-        <v-row>
-            <v-col
-                v-for="field in visible_fields"
-                :key="field.text"
-                no-gutters
-            >
-                {{ field.text }}
-            </v-col>
-        </v-row>
-        <v-row
-            v-for="(row, index) in rows"
-            :key="index"
-            no-gutters
-        >
-            <v-col
-                v-for="field in visible_fields"
-                :key="`${index}-${field.text}`"
-            >
-                {{ row[field.value] }}
-            </v-col>
-
-            <v-col>
-                <v-btn @click="current_row_index = index">
-                    Edit
-                </v-btn>
-            </v-col>
-        </v-row>
-    </template>
+    <table v-if="!current_row">
+        <thead>
+            <tr>
+                <th
+                    v-for="field in visible_fields"
+                    :key="field.text"
+                    no-gutters
+                >
+                    {{ field.text }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <Row
+                v-for="(row, index) in rows"
+                :key="index"
+                :row="row"
+                :index="index"
+            />
+        </tbody>
+    </table>
 
     <template v-else>
         <v-row>
@@ -61,6 +53,7 @@
 <script lang="ts" setup>
 import { useMaintenance } from '../compositions/maintenance/maintenance';
 import { useMaintenanceEdit } from '../compositions/maintenance/maintenance_edit';
+import Row from '../components/maintenance/Row.vue';
 
 const {
     current_table,

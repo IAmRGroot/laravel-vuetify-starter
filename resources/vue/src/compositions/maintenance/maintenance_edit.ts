@@ -1,11 +1,9 @@
-import { computed, reactive, Ref, toRefs } from "vue";
-import { put as fetchPut, patch as fetchPatch } from "../../plugins/fetch";
-import { Row, Table } from "../../types/maintenance";
-import { useMaintenance } from "./maintenance";
+import { computed, reactive, Ref, toRefs } from 'vue';
+import { put as fetchPut, patch as fetchPatch } from '../../plugins/fetch';
+import { Row, Table } from '../../types/maintenance';
+import { useMaintenance } from './maintenance';
 
-const state = reactive({
-    current_row_index: -1,
-});
+const state = reactive({ current_row_index: -1 });
 
 const {
     current_table,
@@ -20,7 +18,7 @@ const put = async (row: Row): Promise<void> => {
 
     rows.value.push(new_row);
     state.current_row_index = -1;
-}
+};
 
 const patch = async (row: Row): Promise<void> => {
     const updated_row =  await fetchPatch<Row>(`/async/maintenance/${current_table.value?.table}/${getKey(row)}`, row);
