@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class BelongsToManyField extends RelationField
 {
-    protected string $component = 'BelongsToManyInput';
+    protected int $type = FieldType::BELONGS_TO_MANY;
 
     protected function getRelationClass(): string
     {

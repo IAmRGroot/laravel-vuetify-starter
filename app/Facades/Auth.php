@@ -30,4 +30,9 @@ class Auth extends FacadesAuth
     {
         return Auth::check() ? (int) parent::id() : null;
     }
+
+    public static function idOrAdmin(): int
+    {
+        return Auth::check() ? (int) parent::id() : User::ADMIN;
+    }
 }

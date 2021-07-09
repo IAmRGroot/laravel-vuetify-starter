@@ -13,4 +13,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+input {
+    border: 1px solid;
+}
 </style>

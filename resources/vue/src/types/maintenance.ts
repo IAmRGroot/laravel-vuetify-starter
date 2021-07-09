@@ -5,7 +5,6 @@ type GenericObject = {
 };
 
 export type Field = {
-    component: string;
     editable: boolean;
     text: string;
     value: string;

@@ -1,12 +1,12 @@
 <template>
-    <span v-if="field.type === FieldType.COLUMN">
-        {{ row[field.value] }}
-    </span>
     <span v-if="field.type === FieldType.HAS_MANY || field.type === FieldType.BELONGS_TO_MANY">
         {{ getLength(row[field.value]) }}
     </span>
-    <span v-if="field.type === FieldType.BELONGS_TO && field.relation">
-        {{ getBelongsToText() }}
+    <span v-else-if="field.type === FieldType.BELONGS_TO">
+        <template v-if="field.relation">{{ getBelongsToText() }}</template>
+    </span>
+    <span v-else>
+        {{ row[field.value] }}
     </span>
 </template>
 

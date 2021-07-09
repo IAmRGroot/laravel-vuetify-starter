@@ -111,7 +111,6 @@ module.exports = {
         'vue/valid-define-emits': ['error'],
         'vue/valid-v-slot': ['error', { allowModifiers: true }],
         'vue/component-tags-order': ['error', { 'order': [ 'template', 'style', 'script' ] }],
-        'vue/prop-name-casing': ['error', 'snake_case'],
         'vue/no-deprecated-scope-attribute': ['error'],
     },
 };

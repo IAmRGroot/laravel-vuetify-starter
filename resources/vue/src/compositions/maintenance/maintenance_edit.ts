@@ -1,6 +1,6 @@
-import { computed, reactive, Ref, toRefs } from 'vue';
+import { computed, reactive, toRefs } from 'vue';
 import { put as fetchPut, patch as fetchPatch } from '../../plugins/fetch';
-import { Row, Table } from '../../types/maintenance';
+import { Row } from '../../types/maintenance';
 import { useMaintenance } from './maintenance';
 
 const state = reactive({ current_row_index: -1 });

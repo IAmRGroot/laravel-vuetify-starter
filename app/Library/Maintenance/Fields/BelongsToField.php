@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BelongsToField extends RelationField
 {
-    protected string $component = 'BelongsToInput';
+    protected int $type = FieldType::BELONGS_TO;
 
     protected function getRelationClass(): string
     {
@@ -32,18 +32,5 @@ class BelongsToField extends RelationField
     protected function getRelationValue($relation): string
     {
         return $relation->getOwnerKeyName();
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(): array
-    {
-        return array_merge(
-            parent::toArray(),
-            [
-                'type' => FieldType::BELONGS_TO,
-            ],
-        );
     }
 }

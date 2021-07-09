@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Exceptions\RelationNotEagerLoadedException;
+use App\Facades\Auth;
+use App\Traits\HasTimestampsBy;
 use App\Traits\SerializeDateWithDefaultTimezone;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Collection;
@@ -16,6 +18,7 @@ abstract class Model extends EloquentModel
     public const DELETED_BY = 'deleted_by';
 
     protected $connection = 'mysql';
+    protected $guarded    = [];
 
     /**
      * Throws exception if relations are not loaded.
@@ -89,5 +92,38 @@ abstract class Model extends EloquentModel
     {
         return $this->{$relation} instanceof self
             || ($this->{$relation} instanceof Collection && $this->{$relation}->count() > 0);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setCreatedAt($value)
+    {
+        parent::setCreatedAt($value);
+
+        if ($this->hasTimestampsBy()) {
+            $this->setAttribute(self::CREATED_BY, Auth::idOrAdmin());
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUpdatedAt($value)
+    {
+        parent::setUpdatedAt($value);
+
+        if ($this->hasTimestampsBy()) {
+            $this->setAttribute(self::UPDATED_BY, Auth::idOrAdmin());
+        }
+
+        return $this;
+    }
+
+    protected function hasTimestampsBy(): bool
+    {
+        return class_uses_recursive($this)[HasTimestampsBy::class] ?? false;
     }
 }

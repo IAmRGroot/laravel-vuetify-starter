@@ -6,14 +6,20 @@ const state = reactive({
     tables: [] as Table[],
     current_table: null as Table|null,
     rows: [] as Row[],
+    empty: null as Row|null,
 });
 
 const fetchSetup = async (): Promise<void> => {
     state.tables = await get<Table[]>('/async/maintenance');
 };
 
-const fetchRows = async (): Promise<void> => {
-    state.rows = await get<Row[]>(`/async/maintenance/${state.current_table?.table}`);
+const fetchRows = (): void => {
+    get<Row[]>(`/async/maintenance/${state.current_table?.table}`).then(rows => {
+        state.rows = rows;
+    });
+    get<Row>(`/async/maintenance/${state.current_table?.table}/empty`).then(empty => {
+        state.empty = empty;
+    });
 };
 
 watch(() => state.current_table, () => fetchRows());

@@ -6,9 +6,9 @@ use App\Enums\FieldType;
 
 abstract class Field
 {
+    protected int $type         = FieldType::TEXT;
     protected bool $editable    = true;
     protected bool $visible     = true;
-    protected string $component = 'TextInput';
 
     public function __construct(
         public string $column
@@ -35,12 +35,11 @@ abstract class Field
     public function toArray(): array
     {
         return [
-            'type'      => FieldType::COLUMN,
+            'type'      => $this->type,
             'value'     => $this->column,
             'text'      => $this->getText(),
             'visible'   => $this->visible,
             'editable'  => $this->editable,
-            'component' => $this->component,
         ];
     }
 

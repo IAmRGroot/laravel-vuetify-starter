@@ -11,13 +11,18 @@
         </v-col>
     </v-row>
 
-    <table v-if="!current_row">
+    <table
+        v-if="!current_row"
+        style="width: 100%;"
+        class="mt-12"
+    >
         <thead>
             <tr>
                 <th
                     v-for="field in visible_fields"
                     :key="field.text"
                     no-gutters
+                    style="text-align: left;"
                 >
                     {{ field.text }}
                 </th>
@@ -33,27 +38,45 @@
         </tbody>
     </table>
 
-    <template v-else>
-        <v-row>
-            <v-btn @click="current_row_index = -1">
-                Back
-            </v-btn>
-        </v-row>
-        <v-row
-            v-for="field in editable_fields"
-            :key="`edit-${field.text}`"
-        >
-            <v-col>{{ field.text }}</v-col>
-            <v-col>{{ current_row[field.value] }}</v-col>
-            <v-col>{{ field.component }}</v-col>
-        </v-row>
-    </template>
+    <table
+        v-else
+        style="width: 100%;"
+    >
+        <tbody>
+            <tr>
+                <v-btn @click="current_row_index = -1">
+                    Back
+                </v-btn>
+            </tr>
+            <tr
+                v-for="field in editable_fields"
+                :key="`edit-${field.text}`"
+            >
+                <td>{{ field.text }}</td>
+                <td>
+                    <component
+                        :is="getComponent(field.type)"
+                        :field="field"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <v-btn @click="checkAndPatch(current_row)">
+                    Save
+                </v-btn>
+            </tr>
+        </tbody>
+    </table>
 </template>
 
 <script lang="ts" setup>
 import { useMaintenance } from '../compositions/maintenance/maintenance';
 import { useMaintenanceEdit } from '../compositions/maintenance/maintenance_edit';
 import Row from '../components/maintenance/Row.vue';
+
+import TextInput from '../components/maintenance/inputs/TextInput.vue';
+import { FieldType } from '../enums/maintenance/FieldType';
+import type { Row as RowType } from '../types/maintenance';
 
 const {
     current_table,
@@ -64,7 +87,37 @@ const {
     fetchSetup,
 } = useMaintenance();
 
-const { current_row, current_row_index } = useMaintenanceEdit();
+const {
+    current_row,
+    current_row_index,
+    patch,
+} = useMaintenanceEdit();
 
 void fetchSetup();
+
+const getComponent = (type: FieldType) => {
+    switch (type) {
+        case FieldType.TEXT:
+        case FieldType.INTEGER:
+        case FieldType.DECIMAL:
+        case FieldType.PASSWORD:
+            return TextInput;
+        // case FieldType.BELONGS_TO:
+        //     return TextInput;
+        // case FieldType.BELONGS_TO_MANY:
+        //     return TextInput;
+        // case FieldType.HAS_MANY:
+        //     return TextInput;
+    }
+
+    return null;
+};
+
+const checkAndPatch = (row: RowType|undefined) => {
+    if (!row){
+        return;
+    }
+
+    patch(row);
+};
 </script>

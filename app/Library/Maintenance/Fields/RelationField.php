@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 abstract class RelationField extends Field
 {
-    protected string $relation_key;
-    protected string $relation_value;
+    public string $relation_key;
+    public string $relation_value;
 
     public function __construct(
         protected Model $instance,

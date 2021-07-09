@@ -3,6 +3,7 @@
 namespace App\Library\Maintenance;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MaintenanceRequest;
 use App\Library\Maintenance\Fields\Field;
 use App\Library\Maintenance\Fields\IdField;
 use App\Library\Maintenance\Fields\RelationField;
@@ -42,6 +43,7 @@ abstract class ControllerBase extends Controller
             ->name("{$this->getName()}.")
             ->group(static function (): void {
                 Route::get('', [static::class, 'get'])->name('get');
+                Route::get('empty', [static::class, 'empty'])->name('empty');
                 Route::put('', [static::class, 'put'])->name('put');
                 Route::patch('{model}', [static::class, 'patch'])->name('patch');
                 Route::delete('{model}', [static::class, 'delete'])->name('delete');
@@ -55,7 +57,7 @@ abstract class ControllerBase extends Controller
     {
         return [
             'table'    => $this->getName(),
-            'fields'   => $this->getAllFields()->map->toArray(),
+            'fields'   => $this->getFieldsWithId()->map->toArray(),
             'key_name' => $this->instance->getKeyName(),
         ];
     }
@@ -79,15 +81,23 @@ abstract class ControllerBase extends Controller
     /**
      * @return array<string, mixed>
      */
+    public function empty(): array
+    {
+        return $this->formatClosure()($this->instance);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
     public function put(MaintenanceRequest $request): array
     {
         $new = $this->instance->newInstance([
-            $request->data($this->getAllFields(false)),
+            $request->data($this->getFieldsWithId()),
         ]);
 
         $new->save();
 
-        return $this->formatClosure()($new);
+        return $this->formatClosure()($new->fresh($this->getRelations()));
     }
 
     /**
@@ -97,24 +107,20 @@ abstract class ControllerBase extends Controller
     {
         $existing = $this->instance->query()->findOrFail($model);
 
-        $existing->fill($request->data($this->getAllFields(false)));
-
+        $existing->fill($request->data($this->getFieldsWithId()));
         $existing->save();
 
-        return $this->formatClosure()($existing);
+        return $this->formatClosure()($existing->fresh($this->getRelations()));
     }
 
     /**
      * @return Collection|Field[]
      */
-    private function getAllFields(bool $include_primary_key = true): Collection
+    private function getFieldsWithId(): Collection
     {
         $fields = $this->getFields();
 
-        if (
-            $include_primary_key
-            && ! $fields->contains(fn (Field $field): bool => $field->column === $this->instance->getKeyName())
-        ) {
+        if (! $fields->contains(fn (Field $field): bool => $field->column === $this->instance->getKeyName())) {
             $fields->prepend(new IdField($this->instance->getKeyName()));
         }
 
@@ -123,10 +129,22 @@ abstract class ControllerBase extends Controller
 
     protected function formatClosure(): Closure
     {
-        return fn (Model $model): array => array_merge(
-            $model->only($this->getAllFields()->map->column->toArray()),
-            $model->getRelations(),
-        );
+        return function (Model $model): array {
+            $data = $model->only(
+                $this->getFieldsWithId()->map->column->toArray()
+            );
+
+            foreach ($model->getHidden() as $hidden) {
+                if (key_exists($hidden, $data)) {
+                    $data[$hidden] = null;
+                }
+            }
+
+            return array_merge(
+                $data,
+                $model->getRelations(),
+            );
+        };
     }
 
     /**

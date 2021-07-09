@@ -78,12 +78,6 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
 
     public const ADMIN = 1;
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
     /**
      * @var string[]
      */

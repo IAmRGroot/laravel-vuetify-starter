@@ -1,6 +1,9 @@
 export enum FieldType {
-    COLUMN = 1,
-    BELONGS_TO = 2,
-    BELONGS_TO_MANY = 3,
-    HAS_MANY = 4,
+    TEXT= 1,
+    INTEGER= 2,
+    DECIMAL= 3,
+    PASSWORD= 4,
+    BELONGS_TO= 5,
+    BELONGS_TO_MANY= 6,
+    HAS_MANY= 7,
 }
