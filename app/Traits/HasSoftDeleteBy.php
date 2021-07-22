@@ -13,8 +13,10 @@ trait HasSoftDeleteBy
 {
     use SoftDeletes;
 
+    abstract public function getDeletedByColumn(): string;
+
     public function deletedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, self::DELETED_BY)->withTrashed(); // @phpstan-ignore-line
+        return $this->belongsTo(User::class, $this->getDeletedByColumn())->withTrashed();
     }
 }

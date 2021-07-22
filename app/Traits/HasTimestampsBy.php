@@ -10,13 +10,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 trait HasTimestampsBy
 {
+    abstract public function getCreatedByColumn(): string;
+
+    abstract public function getUpdatedByColumn(): string;
+
     public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, self::CREATED_BY)->withTrashed(); // @phpstan-ignore-line
+        return $this->belongsTo(User::class, $this->getCreatedByColumn())->withTrashed();
     }
 
     public function updatedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, static::UPDATED_BY)->withTrashed(); // @phpstan-ignore-line
+        return $this->belongsTo(User::class, $this->getUpdatedByColumn())->withTrashed();
     }
 }

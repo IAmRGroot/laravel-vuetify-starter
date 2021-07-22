@@ -5,6 +5,7 @@ namespace App\Models\Auth;
 use App\Models\Model;
 use App\Traits\HasSoftDeleteBy;
 use App\Traits\HasTimestampsBy;
+use Database\Factories\UserFactory;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -92,4 +93,9 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected static function newFactory(): UserFactory
+    {
+        return UserFactory::new();
+    }
 }

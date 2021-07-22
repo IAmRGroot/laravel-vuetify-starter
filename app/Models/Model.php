@@ -13,11 +13,22 @@ abstract class Model extends EloquentModel
 {
     use SerializeDateWithDefaultTimezone;
 
-    public const CREATED_BY = 'created_by';
-    public const UPDATED_BY = 'updated_by';
-    public const DELETED_BY = 'deleted_by';
+    public function getCreatedByColumn(): string
+    {
+        return 'created_by';
+    }
 
-    protected $connection = 'mysql';
+    public function getUpdatedByColumn(): string
+    {
+        return 'updated_by';
+    }
+
+    public function getDeletedByColumn(): string
+    {
+        return 'deleted_by';
+    }
+
+    // protected $connection = 'mysql';
     protected $guarded    = [];
 
     /**
@@ -102,7 +113,7 @@ abstract class Model extends EloquentModel
         parent::setCreatedAt($value);
 
         if ($this->hasTimestampsBy()) {
-            $this->setAttribute(self::CREATED_BY, Auth::idOrAdmin());
+            $this->setAttribute($this->getCreatedByColumn(), Auth::idOrAdmin());
         }
 
         return $this;
@@ -116,7 +127,7 @@ abstract class Model extends EloquentModel
         parent::setUpdatedAt($value);
 
         if ($this->hasTimestampsBy()) {
-            $this->setAttribute(self::UPDATED_BY, Auth::idOrAdmin());
+            $this->setAttribute($this->getUpdatedByColumn(), Auth::idOrAdmin());
         }
 
         return $this;

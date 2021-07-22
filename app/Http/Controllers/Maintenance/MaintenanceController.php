@@ -21,7 +21,8 @@ class MaintenanceController extends Controller
 
     public static function routes(): void
     {
-        Route::prefix('maintenance')
+        Route::middleware('can:maintenance')
+            ->prefix('maintenance')
             ->name('maintenance.')
             ->group(static function (): void {
                 Route::get('', [MaintenanceController::class, 'maintenance']);
@@ -35,7 +36,7 @@ class MaintenanceController extends Controller
     /**
      * @return ControllerBase[]
      */
-    private static function getControllers(): array
+    public static function getControllers(): array
     {
         return [
             new UserController(),

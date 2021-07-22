@@ -31,9 +31,4 @@ class CreateUsersTable extends Migration
         $admin->updated_by        = User::ADMIN;
         $admin->save();
     }
-
-    public function down(): void
-    {
-        Schema::dropIfExists('users');
-    }
 }

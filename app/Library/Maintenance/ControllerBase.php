@@ -9,6 +9,8 @@ use App\Library\Maintenance\Fields\IdField;
 use App\Library\Maintenance\Fields\RelationField;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -67,50 +69,54 @@ abstract class ControllerBase extends Controller
         return Str::plural(Str::lower(class_basename($this->model)));
     }
 
-    /**
-     * @return Collection|array<string, mixed>[]
-     */
-    public function get(): Collection
+    public function get(): JsonResponse
     {
-        return $this->instance->query()
-            ->with($this->getRelations())
-            ->get()
-            ->map(fn ($model) => $this->formatClosure()($model));
+        return response()->json(
+            $this->instance->query()
+                ->with($this->getRelations())
+                ->get()
+                ->map(fn ($model) => $this->formatClosure()($model))
+        );
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function empty(): array
+    public function empty(): JsonResponse
     {
-        return $this->formatClosure()($this->instance);
+        return response()->json($this->instance);
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function put(MaintenanceRequest $request): array
+    public function put(MaintenanceRequest $request): JsonResponse
     {
-        $new = $this->instance->newInstance([
-            $request->data($this->getFieldsWithId()),
-        ]);
+        $new = $this->instance->newInstance(
+            $request->data($this->getFieldsWithId())
+        );
 
         $new->save();
 
-        return $this->formatClosure()($new->fresh($this->getRelations()));
+        return response()->json(
+            $this->formatClosure()($new->fresh($this->getRelations())),
+            Response::HTTP_CREATED,
+        );
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function patch(MaintenanceRequest $request, int $model): array
+    public function patch(MaintenanceRequest $request, int $model): JsonResponse
     {
         $existing = $this->instance->query()->findOrFail($model);
 
         $existing->fill($request->data($this->getFieldsWithId()));
         $existing->save();
 
-        return $this->formatClosure()($existing->fresh($this->getRelations()));
+        return response()->json(
+            $this->formatClosure()($existing->fresh($this->getRelations()))
+        );
+    }
+
+    public function delete(int $model): JsonResponse
+    {
+        $existing = $this->instance->query()->findOrFail($model);
+
+        $existing->delete();
+
+        return response()->json(['message' => 'ok']);
     }
 
     /**

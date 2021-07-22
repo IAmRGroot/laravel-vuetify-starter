@@ -6,6 +6,7 @@ use App\Library\Maintenance\Fields\BelongsToField;
 use App\Library\Maintenance\Fields\Field;
 use App\Library\Maintenance\Fields\Password;
 use App\Library\Maintenance\Fields\Text;
+use App\Library\Maintenance\Fields\TimestampField;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Collection;
 
@@ -30,10 +31,11 @@ class MaintenanceRequest extends FormRequest
         $to_skip = [];
 
         $mapped = $fields->mapWithKeys(static function (Field $field) use ($data, &$to_skip) {
-            if ($field instanceof BelongsToField) {
+            if ($field instanceof TimestampField) {
+                $to_skip[] = $field->column;
+            } elseif ($field instanceof BelongsToField) {
                 return [$field->relation_key => $data[$field->relation][$field->relation_value]];
-            }
-            if ($field instanceof Password) {
+            } elseif ($field instanceof Password) {
                 if (! $data[$field->column]) {
                     $to_skip[] = $field->column;
                 } else {
