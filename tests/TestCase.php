@@ -14,7 +14,7 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
 
         abort_if(
-            method_exists($this, 'usingInMemoryDatabase') && !$this->usingInMemoryDatabase(),
+            method_exists($this, 'usingInMemoryDatabase') && ! $this->usingInMemoryDatabase(),
             Response::HTTP_UNPROCESSABLE_ENTITY,
             'Config uses real database instead of in-memory sqlite.'
         );

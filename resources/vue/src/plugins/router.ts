@@ -21,6 +21,7 @@ router.beforeEach(async (to, from, next): Promise<void> => {
         is_authenticated,
         next_route,
         fetchUser,
+        user,
     } = useAuth();
 
     if (!first_check_done.value) {
@@ -35,6 +36,14 @@ router.beforeEach(async (to, from, next): Promise<void> => {
         next_route.value = to.fullPath;
 
         next('/login');
+        return;
+    }
+
+    if (
+        Array.isArray(to.meta.permissions) &&
+        !to.meta.permissions.every(permission => user.value?.permissions.includes(permission))
+    ){
+        next('/forbidden');
         return;
     }
 

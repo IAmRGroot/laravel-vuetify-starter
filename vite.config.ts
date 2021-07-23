@@ -5,9 +5,7 @@ import pages from 'vite-plugin-pages';
 import eslintPlugin from 'vite-plugin-eslint';
 import compression from 'vite-plugin-compression';
 
-const public_routes = [
-    /^\/login$/,
-];
+import { isPublic, getPermissions } from './resources/vue/src/plugins/permissions';
 
 // https://vitejs.dev/config/
 export default ({ mode, command }: ConfigEnv): UserConfigExport => {
@@ -26,13 +24,16 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
                 return 'async';
             },
             extendRoute(route) {
-                if (public_routes.some(public_route => public_route.test(route.path))) {
+                if (isPublic(route.path)) {
                     return route;
                 }
 
                 return {
                     ...route,
-                    meta: { auth: true },
+                    meta: {
+                        auth: true,
+                        permissions: getPermissions(route.name),
+                    },
                 };
             },
         }),

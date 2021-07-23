@@ -2,4 +2,8 @@ export type LoginResponse = {
     url: string;
 };
 
-export type User = Record<string, unknown>;
+export type User = {
+    id: number,
+    name: string,
+    permissions: string[],
+};

@@ -11,7 +11,20 @@
     </v-row>
     <v-row
         justify="center"
+        align="center"
         class="mt-6"
+    >
+        <v-btn
+            v-for="route in ['maintenance']"
+            :key="route"
+            @click="push(route)"
+        >
+            {{ route }}
+        </v-btn>
+    </v-row>
+    <v-row
+        justify="center"
+        class="mt-12"
     >
         <v-btn @click="logout">
             Logout
@@ -20,7 +33,9 @@
 </template>
 
 <script lang="ts" setup>
+import { useRouter } from 'vue-router';
 import { useAuth } from '../compositions/auth';
 
 const { logout } = useAuth();
+const { push } = useRouter();
 </script>
