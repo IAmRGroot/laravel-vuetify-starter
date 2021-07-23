@@ -12,23 +12,23 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.40",
+        "laravel/framework": "^8.51",
         "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.2",
-        "sentry/sentry-laravel": "^2.5",
-        "spatie/laravel-permission": "^4.0"
+        "laravel/tinker": "^2.6",
+        "laravel/ui": "^3.3",
+        "sentry/sentry-laravel": "^2.7",
+        "spatie/laravel-permission": "^4.2"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.10",
         "brianium/paratest": "^6.3",
-        "facade/ignition": "^2.5",
-        "fakerphp/faker": "^1.9.1",
+        "facade/ignition": "^2.11",
+        "fakerphp/faker": "^1.15",
         "friendsofphp/php-cs-fixer": "^3.0",
-        "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^5.0",
+        "mockery/mockery": "^1.4",
+        "nunomaduro/collision": "^5.5",
         "nunomaduro/larastan": "^0.7.11",
-        "phpunit/phpunit": "^9.3.3"
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
