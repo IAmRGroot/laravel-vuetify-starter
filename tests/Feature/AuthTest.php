@@ -29,7 +29,12 @@ class AuthTest extends TestCase
             ->assertCookie('laravel_session');
 
         $this->get('/async/user')
-            ->assertOk();
+            ->assertOk()
+            ->assertJson([
+                'id'          => $user->id,
+                'name'        => $user->name,
+                'permissions' => [],
+            ]);
     }
 
     public function testLogout(): void

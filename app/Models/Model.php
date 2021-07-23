@@ -13,6 +13,8 @@ abstract class Model extends EloquentModel
 {
     use SerializeDateWithDefaultTimezone;
 
+    protected $guarded = [];
+
     public function getCreatedByColumn(): string
     {
         return 'created_by';
@@ -27,9 +29,6 @@ abstract class Model extends EloquentModel
     {
         return 'deleted_by';
     }
-
-    // protected $connection = 'mysql';
-    protected $guarded    = [];
 
     /**
      * Throws exception if relations are not loaded.
