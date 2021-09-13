@@ -1,5 +1,6 @@
 import { ConfigEnv, defineConfig, UserConfigExport } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import vuetify from '@vuetify/vite-plugin';
 import copy from 'rollup-plugin-copy';
 import pages from 'vite-plugin-pages';
 import eslintPlugin from 'vite-plugin-eslint';
@@ -12,11 +13,12 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
     // If you need env
     // process.env = {...process.env, ...loadEnv(mode, process.cwd())};
 
-    const prod = mode === 'production';
-    const dev_server = command !== 'build';
+    const is_production = mode === 'production';
+    const is_dev_server = command !== 'build';
 
     const plugins = [
         vue(),
+        vuetify(),
         pages({
             pagesDir: 'src/pages',
             extensions: ['vue', 'ts'],
@@ -38,12 +40,12 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
             },
         }),
         eslintPlugin({
-            fix: !prod,
+            fix: !is_production,
             include: ['./**/*.ts', './**/*.vue'],
         }),
     ];
 
-    if (prod) {
+    if (is_production) {
         plugins.push(compression());
         plugins.push({
             ...copy({
@@ -64,11 +66,11 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
     return defineConfig({
         plugins: plugins,
         root: 'resources/vue',
-        build: prod ? {} : {
+        build: is_production ? {} : {
             outDir: '../../public/vue',
             brotliSize: false,
         },
-        base: dev_server ? '/' : '/vue/',
+        base: is_dev_server ? '/' : '/vue/',
         server: { host: '0.0.0.0' },
     });
 };
