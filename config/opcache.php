@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'url'         => env('OPCACHE_URL', config('app.url')),
     'directories' => [
         base_path('app'),
         base_path('bootstrap'),

@@ -1,4 +1,12 @@
 <template>
+    <v-row
+        justify="center"
+        class="my-6"
+    >
+        <v-btn @click="push('/')">
+            Home
+        </v-btn>
+    </v-row>
     <v-row>
         <v-col
             v-for="table in tables"
@@ -12,7 +20,7 @@
     </v-row>
 
     <table
-        v-if="!current_row"
+        v-if="current_table && !current_row"
         style="width: 100%;"
         class="mt-12"
     >
@@ -73,10 +81,12 @@
 import { useMaintenance } from '../compositions/maintenance/maintenance';
 import { useMaintenanceEdit } from '../compositions/maintenance/maintenance_edit';
 import Row from '../components/maintenance/Row.vue';
-
 import TextInput from '../components/maintenance/inputs/TextInput.vue';
 import { FieldType } from '../enums/maintenance/FieldType';
 import type { Row as RowType } from '../types/maintenance';
+import { useRouter } from 'vue-router';
+
+const { push } = useRouter();
 
 const {
     current_table,

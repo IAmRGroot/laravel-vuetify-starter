@@ -85,6 +85,8 @@ module.exports = {
         'no-alert': ['error'],
         'indent': ['error', spaces, { SwitchCase: 1 }],
 
+        'no-undef': ['off'],
+
         ...eslint_rules,
         ...vue_rules,
 

@@ -11,7 +11,6 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue';
 import type { Field, Row } from '../../types/maintenance';
 import { FieldType } from '../../enums/maintenance/FieldType';
 

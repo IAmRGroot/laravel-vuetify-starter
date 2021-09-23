@@ -13,9 +13,6 @@ use Tests\TestCase;
  */
 class AuthTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithFaker;
-
     public function testLogin(): void
     {
         $this->get('/async/user')
@@ -42,6 +39,7 @@ class AuthTest extends TestCase
         $this->post('/async/logout')
             ->assertUnauthorized();
 
+        /** @var User $user */
         $user = User::factory()->make();
         $user->save();
 

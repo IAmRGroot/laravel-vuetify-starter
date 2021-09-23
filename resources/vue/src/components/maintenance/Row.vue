@@ -11,7 +11,7 @@
         </td>
 
         <td>
-            <v-btn @click="current_row_index = index">
+            <v-btn @click="setRowIndex(index)">
                 Edit
             </v-btn>
         </td>
@@ -20,7 +20,6 @@
 
 
 <script lang="ts" setup>
-import { defineProps } from 'vue';
 import { useMaintenance } from '../../compositions/maintenance/maintenance';
 import { useMaintenanceEdit } from '../../compositions/maintenance/maintenance_edit';
 import type { Row } from '../../types/maintenance';
@@ -33,4 +32,8 @@ defineProps<{
 
 const { visible_fields } = useMaintenance();
 const { current_row_index } = useMaintenanceEdit();
+
+const setRowIndex = (index: number) => {
+    current_row_index.value = index;
+};
 </script>

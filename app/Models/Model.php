@@ -14,6 +14,7 @@ abstract class Model extends EloquentModel
     use SerializeDateWithDefaultTimezone;
 
     protected $guarded = [];
+    protected $connection = 'mysql';
 
     public function getCreatedByColumn(): string
     {

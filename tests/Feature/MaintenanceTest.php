@@ -20,9 +20,6 @@ use Tests\TestCase;
  */
 class MaintenanceTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithFaker;
-
     public function testMaintenanceAuth(): User
     {
         $response = $this->get('async/maintenance');
