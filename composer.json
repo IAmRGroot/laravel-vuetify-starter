@@ -57,6 +57,10 @@
             "@php artisan ide-helper:generate",
             "@php artisan ide-helper:models -W -r",
             "composer format"
+        ],
+        "test": [
+            "php artisan config:clear",
+            "php artisan test"
         ]
     },
     "extra": {
