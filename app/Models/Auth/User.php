@@ -96,6 +96,9 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
 
     protected static function newFactory(): UserFactory
     {
-        return UserFactory::new();
+        return UserFactory::new([
+            'created_by' => self::ADMIN,
+            'updated_by' => self::ADMIN,
+        ]);
     }
 }

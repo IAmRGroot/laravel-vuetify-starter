@@ -2,7 +2,9 @@
 
 namespace App\Traits;
 
+use App\Facades\Auth;
 use App\Models\Auth\User;
+use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -10,9 +12,25 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 trait HasTimestampsBy
 {
-    abstract public function getCreatedByColumn(): string;
+    use HasTimestamps {
+        setCreatedAt as protected originalSetCreatedAt;
+        setUpdatedAt as protected originalSetUpdatedAt;
+    }
 
-    abstract public function getUpdatedByColumn(): string;
+    public function getCreatedByColumn(): string
+    {
+        return 'created_by';
+    }
+
+    public function getUpdatedByColumn(): string
+    {
+        return 'updated_by';
+    }
+
+    public function getTimestampUser(): int
+    {
+        return Auth::forceId();
+    }
 
     public function createdBy(): BelongsTo
     {
@@ -22,5 +40,27 @@ trait HasTimestampsBy
     public function updatedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, $this->getUpdatedByColumn())->withTrashed();
+    }
+
+    public function setCreatedAt($value)
+    {
+        $this->originalSetCreatedAt($value);
+
+        if (! $this->isDirty($this->getCreatedByColumn())) {
+            $this->setAttribute($this->getCreatedByColumn(), $this->getTimestampUser());
+        }
+
+        return $this;
+    }
+
+    public function setUpdatedAt($value)
+    {
+        $this->originalSetUpdatedAt($value);
+
+        if (! $this->isDirty($this->getUpdatedByColumn())) {
+            $this->setAttribute($this->getUpdatedByColumn(), $this->getTimestampUser());
+        }
+
+        return $this;
     }
 }

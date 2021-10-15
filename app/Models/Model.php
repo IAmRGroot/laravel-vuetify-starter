@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use App\Exceptions\RelationNotEagerLoadedException;
-use App\Facades\Auth;
-use App\Traits\HasTimestampsBy;
 use App\Traits\SerializeDateWithDefaultTimezone;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Collection;
@@ -14,21 +12,6 @@ abstract class Model extends EloquentModel
     use SerializeDateWithDefaultTimezone;
 
     protected $guarded = [];
-
-    public function getCreatedByColumn(): string
-    {
-        return 'created_by';
-    }
-
-    public function getUpdatedByColumn(): string
-    {
-        return 'updated_by';
-    }
-
-    public function getDeletedByColumn(): string
-    {
-        return 'deleted_by';
-    }
 
     /**
      * Throws exception if relations are not loaded.
@@ -102,38 +85,5 @@ abstract class Model extends EloquentModel
     {
         return $this->{$relation} instanceof self
             || ($this->{$relation} instanceof Collection && $this->{$relation}->count() > 0);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setCreatedAt($value)
-    {
-        parent::setCreatedAt($value);
-
-        if ($this->hasTimestampsBy()) {
-            $this->setAttribute($this->getCreatedByColumn(), Auth::idOrAdmin());
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setUpdatedAt($value)
-    {
-        parent::setUpdatedAt($value);
-
-        if ($this->hasTimestampsBy()) {
-            $this->setAttribute($this->getUpdatedByColumn(), Auth::idOrAdmin());
-        }
-
-        return $this;
-    }
-
-    protected function hasTimestampsBy(): bool
-    {
-        return class_uses_recursive($this)[HasTimestampsBy::class] ?? false;
     }
 }
