@@ -45,8 +45,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref  } from '@vue/composition-api';
+import { useRouter } from '../plugins/router';
 import { get, post } from '../plugins/fetch';
 import { useAuth } from '../compositions/auth';
 import type { LoginResponse } from '../types/user';
@@ -55,7 +55,8 @@ const email = ref('');
 const password = ref('');
 const error = ref('');
 
-const { push } = useRouter();
+const router = useRouter();
+
 const { is_authenticated, next_route } = useAuth();
 
 const doLogin = async () => {
@@ -68,7 +69,7 @@ const doLogin = async () => {
             password: password.value,
         });
 
-        push(next_route.value ?? '/');
+        router.push(next_route.value ?? '/');
     } catch (fetch_error) {
         error.value = fetch_error;
     }
@@ -76,7 +77,7 @@ const doLogin = async () => {
 
 const checkAuth = async () => {
     if (is_authenticated.value) {
-        push({ name: 'index' });
+        router.push({ name: 'index' });
     }
 };
 

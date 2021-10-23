@@ -1,10 +1,12 @@
 import { ConfigEnv, defineConfig, UserConfigExport } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import vuetify from '@vuetify/vite-plugin';
+import { createVuePlugin as vue2 } from 'vite-plugin-vue2';
 import copy from 'rollup-plugin-copy';
 import pages from 'vite-plugin-pages';
 import eslintPlugin from 'vite-plugin-eslint';
 import compression from 'vite-plugin-compression';
+import scriptSetup from 'unplugin-vue2-script-setup/vite';
+import components from 'unplugin-vue-components/vite';
+import { VuetifyResolver } from 'unplugin-vue-components/resolvers';
 
 import { isPublic, getPermissions } from './resources/vue/src/plugins/permissions';
 
@@ -17,8 +19,13 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
     const is_dev_server = command !== 'build';
 
     const plugins = [
-        vue(),
-        vuetify(),
+        vue2(),
+        scriptSetup(),
+        components({
+            resolvers: [
+                VuetifyResolver(),
+            ],
+        }),
         pages({
             pagesDir: 'src/pages',
             extensions: ['vue', 'ts'],
@@ -45,23 +52,23 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
         }),
     ];
 
-    if (is_production) {
-        plugins.push(compression());
-        plugins.push({
-            ...copy({
-                targets: [
-                    {
-                        src: 'resources/vue/dist/*',
-                        dest: 'public/vue',
-                    },
-                ],
-                overwrite: true,
-                hook: 'writeBundle',
-                preserveTimestamps: true,
-            }),
-            enforce: 'post',
-        });
-    }
+    // if (is_production) {
+    //     plugins.push(compression());
+    //     plugins.push({
+    //         ...copy({
+    //             targets: [
+    //                 {
+    //                     src: 'resources/vue/dist/*',
+    //                     dest: 'public/vue',
+    //                 },
+    //             ],
+    //             overwrite: true,
+    //             hook: 'writeBundle',
+    //             preserveTimestamps: true,
+    //         }),
+    //         enforce: 'post',
+    //     });
+    // }
 
     return defineConfig({
         plugins: plugins,

@@ -1,17 +1,21 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import Vue from 'vue';
+import VueRouter, { Route } from 'vue-router';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import routes from 'virtual:generated-pages';
 import { useAuth } from '../compositions/auth';
+import { getCurrentInstance } from '@vue/composition-api';
 
-const router = createRouter({
-    history: createWebHistory(),
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+    mode: 'history',
     routes,
 });
 
 router.beforeEach(async (to, from, next): Promise<void> => {
-    if (!to.meta.auth) {
+    if (!to.meta || !to.meta.auth) {
         next();
         return;
     }
@@ -52,3 +56,17 @@ router.beforeEach(async (to, from, next): Promise<void> => {
 });
 
 export default router;
+
+export const useRoute = (): Route =>  {
+    const vm = getCurrentInstance();
+    if (!vm) throw new Error('must be called in setup');
+
+    return vm.proxy.$route;
+};
+
+export const useRouter = (): VueRouter => {
+    const vm = getCurrentInstance();
+    if (!vm) throw new Error('must be called in setup');
+
+    return vm.proxy.$router;
+};

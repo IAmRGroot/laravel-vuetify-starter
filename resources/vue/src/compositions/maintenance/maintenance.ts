@@ -1,4 +1,4 @@
-import { computed, reactive, toRefs, watch } from 'vue';
+import { computed, reactive, toRefs, watch  } from '@vue/composition-api';
 import { get } from '../../plugins/fetch';
 import type { Field, Row, Table } from '../../types/maintenance';
 

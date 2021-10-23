@@ -23,6 +23,8 @@ services:
     user: "${UID}"
     command: php-fpm -F
     hostname: ${APP_NAME}
+    extra_hosts:
+        - "${APP_NAME}.localhost:host-gateway"
     depends_on:
       - laravel-db
     environment:

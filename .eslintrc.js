@@ -65,10 +65,11 @@ module.exports = {
         'node_modules',
     ],
     extends: [
-        'plugin:vue/vue3-recommended',
+        'plugin:vue/base',
         'eslint:recommended',
         '@vue/typescript/recommended',
     ],
+    parser: 'vue-eslint-parser',
     parserOptions: {
         parser: '@typescript-eslint/parser',
         ecmaVersion: 2021,

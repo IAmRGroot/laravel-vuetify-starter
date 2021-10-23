@@ -9,8 +9,17 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
-    "types": ["vite/client"],
     "noUnusedLocals": true,
+    "types": ["vite/client", "vuetify"],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/vuetify/types",
+      "./node_modules/vite/types",
+      "./node_modules/unplugin-vue2-script-setup/types"
+    ],
+  },
+  "vueCompilerOptions": {
+    "experimentalCompatMode": 2
   },
   "include": [
     "resources/vue/src/**/*.ts",

@@ -1,4 +1,4 @@
-import { computed, reactive, toRefs } from 'vue';
+import { computed, reactive, toRefs } from '@vue/composition-api';
 import { get, post } from '../plugins/fetch';
 import type { User } from '../types/user';
 

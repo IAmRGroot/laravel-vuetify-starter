@@ -1,13 +1,13 @@
 <template>
     <span>404 😢</span>
 
-    <v-btn @click="push('/')">
+    <v-btn @click="router.push('/')">
         Home
     </v-btn>
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from 'vue-router';
+import { useRouter } from '../plugins/router';
 
-const { push } = useRouter();
+const router = useRouter();
 </script>

@@ -1,9 +1,13 @@
-import { computed, reactive, toRefs } from 'vue';
+import { computed, reactive, toRefs  } from '@vue/composition-api';
 import { put as fetchPut, patch as fetchPatch } from '../../plugins/fetch';
 import { Row } from '../../types/maintenance';
 import { useMaintenance } from './maintenance';
 
 const state = reactive({ current_row_index: -1 });
+
+const setRowIndex = (index: number) => {
+    state.current_row_index = index;
+};
 
 const {
     current_table,
@@ -30,6 +34,7 @@ const patch = async (row: Row): Promise<void> => {
 const use_maintenance_edit = {
     ...toRefs(state),
     current_row,
+    setRowIndex,
     put,
     patch,
 };
