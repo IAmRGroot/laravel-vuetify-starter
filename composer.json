@@ -18,7 +18,8 @@
         "laravel/ui": "^3.3",
         "sentry/sentry-laravel": "^2.9",
         "spatie/laravel-data": "^1.0",
-        "spatie/laravel-permission": "^5.3"
+        "spatie/laravel-permission": "^5.3",
+        "spatie/laravel-typescript-transformer": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.10",

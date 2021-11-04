@@ -1,3 +1,5 @@
+import { ResponseError } from '../types/fetch';
+
 const default_init = {
     headers: {
         'Content-Type': 'application/json',
@@ -75,9 +77,11 @@ async function handleResponse<T>(response: Response): Promise<T> {
     }
 
     if (!response.ok) {
-        const error = json && json.message || response.statusText;
+        if (!('message' in json)) {
+            json.message = response.statusText;
+        }
 
-        return Promise.reject(error);
+        return Promise.reject(json as ResponseError);
     }
 
     return json as T;

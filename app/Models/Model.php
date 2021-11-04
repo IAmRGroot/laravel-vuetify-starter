@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Exceptions\RelationNotEagerLoadedException;
 use App\Traits\SerializeDateWithDefaultTimezone;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 
 abstract class Model extends EloquentModel
@@ -12,6 +14,17 @@ abstract class Model extends EloquentModel
     use SerializeDateWithDefaultTimezone;
 
     protected $guarded = [];
+
+    public static function findById(string|int $id, ?Builder $query = null): static
+    {
+        $query ??= self::query();
+
+        $model = $query->findOrFail($id);
+
+        abort_unless($model instanceof static, Response::HTTP_NOT_FOUND, 'Model not found');
+
+        return $model;
+    }
 
     /**
      * Throws exception if relations are not loaded.

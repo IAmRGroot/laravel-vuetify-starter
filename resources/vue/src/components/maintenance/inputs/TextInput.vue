@@ -1,9 +1,10 @@
 <template>
-    <input
+    <v-text-field
         v-if="current_row"
         v-model="current_row[field.value]"
-        style="width: 100%;"
-    >
+        dense
+        hide-details="auto"
+    />
 </template>
 
 <script lang="ts" setup>

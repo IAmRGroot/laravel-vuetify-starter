@@ -1,9 +1,11 @@
 <template>
-    <span>404 😢</span>
+    <div>
+        <span>404 😢</span>
 
-    <v-btn @click="router.push('/')">
-        Home
-    </v-btn>
+        <v-btn @click="router.push('/')">
+            Home
+        </v-btn>
+    </div>
 </template>
 
 <script lang="ts" setup>

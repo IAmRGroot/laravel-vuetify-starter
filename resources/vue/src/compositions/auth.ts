@@ -1,9 +1,9 @@
 import { computed, reactive, toRefs } from '@vue/composition-api';
 import { get, post } from '../plugins/fetch';
-import type { User } from '../types/user';
+import { UserData } from '../types/generated';
 
 const state = reactive({
-    user: null as User|null,
+    user: null as UserData|null,
     first_check_done: false,
     next_route: null as null|string,
 });
@@ -11,7 +11,7 @@ const state = reactive({
 const is_authenticated = computed((): boolean => state.user !== null);
 
 const fetchUser = async (): Promise<void> => {
-    state.user = await get<User>('/async/user');
+    state.user = await get<UserData>('/async/user');
 };
 
 const logout = async (): Promise<void> => {

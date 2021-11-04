@@ -40,7 +40,7 @@ abstract class ControllerBase extends Controller
     }
 
     /**
-     * @return Collection|Field[]
+     * @return Collection<Field>
      */
     abstract protected function getFields(): Collection;
 
