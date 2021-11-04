@@ -26,7 +26,7 @@ abstract class RelationField extends Field
 
         $relation_instance = $instance->{$relation}();
 
-        if (! is_a($relation_instance, $this->getRelationClass())) {
+        if (! is_subclass_of($relation_instance, Relation::class) || ! is_a($relation_instance, $this->getRelationClass())) {
             throw new IncorrectSetupException("Relation {$relation} on {$class_name} is not a {$this->getRelationClass()}");
         }
 

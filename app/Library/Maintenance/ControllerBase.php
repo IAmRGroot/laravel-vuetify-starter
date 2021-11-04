@@ -2,6 +2,7 @@
 
 namespace App\Library\Maintenance;
 
+use App\Exceptions\IncorrectSetupException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MaintenanceRequest;
 use App\Library\Maintenance\Fields\Field;
@@ -30,6 +31,11 @@ abstract class ControllerBase extends Controller
     public function __construct()
     {
         $model_name     = $this->model;
+
+        if (! is_subclass_of($model_name, Model::class)) {
+            throw new IncorrectSetupException("Model {$model_name} is not an model");
+        }
+
         $this->instance = new $model_name();
     }
 
