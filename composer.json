@@ -27,6 +27,7 @@
         "facade/ignition": "^2.16",
         "fakerphp/faker": "^1.16",
         "friendsofphp/php-cs-fixer": "^3.2",
+        "librenms/laravel-vue-i18n-generator": "^0.1.47",
         "mockery/mockery": "^1.4",
         "nunomaduro/collision": "^5.10",
         "nunomaduro/larastan": "^1.0",
@@ -58,6 +59,10 @@
         "ide-helper": [
             "@php artisan ide-helper:generate",
             "@php artisan ide-helper:models -W -r",
+            "composer format"
+        ],
+        "i18n": [
+            "php artisan vue-i18n:generate --format=json",
             "composer format"
         ],
         "test": [

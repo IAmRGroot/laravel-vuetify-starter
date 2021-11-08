@@ -2,6 +2,10 @@
 
 namespace App\Library\Maintenance\Fields;
 
-class TimestampField extends BelongsToField
+use App\Enums\FieldType;
+
+class TimestampField extends Field
 {
+    protected int $type      = FieldType::TIMESTAMP;
+    protected bool $editable = false;
 }

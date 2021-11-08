@@ -5,6 +5,9 @@
     <span v-else-if="field.type === FieldType.BELONGS_TO">
         <template v-if="field.relation">{{ getBelongsToText() }}</template>
     </span>
+    <span v-else-if="field.type === FieldType.TIMESTAMP">
+        <Timestamp :timestamp="row[field.value]" />
+    </span>
     <span v-else>
         {{ row[field.value] }}
     </span>
@@ -13,6 +16,7 @@
 <script lang="ts" setup>
 import type { Field, Row } from '../../types/maintenance';
 import { FieldType } from '../../enums/maintenance/FieldType';
+import Timestamp from './outputs/Timestamp.vue';
 
 const props = defineProps<{
     row: Row,
@@ -26,7 +30,7 @@ const getBelongsToText = (): string => {
 
     const relation = props.row[field.relation];
 
-    if (typeof relation !== 'object') return '';
+    if (typeof relation !== 'object' || relation === null) return '';
 
     return String(relation[field.relation_text]);
 };

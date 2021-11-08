@@ -1,7 +1,7 @@
 import { FieldType } from '../enums/maintenance/FieldType';
 
 type GenericObject = {
-    [column: string]: string|number|boolean|GenericObject;
+    [column: string]: string|number|boolean|GenericObject|null;
 };
 
 export type Field = {

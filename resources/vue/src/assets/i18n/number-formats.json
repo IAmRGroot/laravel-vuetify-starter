@@ -1,0 +1,22 @@
+{
+    "en": {
+        "currency": {
+            "style": "currency",
+            "currency": "GBP",
+            "currencyDisplay": "symbol"
+        },
+        "integer": {
+            "style": "decimal",
+            "maximumFractionDigits": 0
+        },
+        "decimal": {
+            "style": "decimal",
+            "maximumFractionDigits": 2
+        },
+        "two_fixed": {
+            "style": "decimal",
+            "maximumFractionDigits": 2,
+            "minimumFractionDigits": 2
+        }
+    }
+}

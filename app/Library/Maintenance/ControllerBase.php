@@ -10,6 +10,8 @@ use App\Library\Maintenance\Fields\IdField;
 use App\Library\Maintenance\Fields\RelationField;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
@@ -108,8 +110,22 @@ abstract class ControllerBase extends Controller
     {
         $existing = $this->instance->query()->findOrFail($model);
 
-        $existing->fill($request->data($this->getFieldsWithId()));
+        $fields = $this->getFieldsWithId();
+
+        $existing->fill($request->data($fields));
         $existing->save();
+
+        $relations = $request->relations($fields);
+
+        foreach ($relations as $relation => $value) {
+            $model_relation = $existing->{$relation}();
+
+            if ($model_relation instanceof BelongsToMany) {
+                $model_relation->sync($value);
+            } elseif ($model_relation instanceof BelongsTo) {
+                $model_relation->associate($value);
+            }
+        }
 
         return response()->json(
             $this->formatClosure()($existing->fresh($this->getRelations()))

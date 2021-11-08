@@ -39,10 +39,14 @@ class BelongsToManyField extends RelationField
      */
     public function toArray(): array
     {
+        /** @var BelongsToMany $belongs_to_many */
+        $belongs_to_many = $this->instance->{$this->relation}();
+
         return array_merge(
             parent::toArray(),
             [
-                'type' => FieldType::BELONGS_TO_MANY,
+                'type'    => FieldType::BELONGS_TO_MANY,
+                'options' => $belongs_to_many->getModel()->all([$this->relation_value, $this->description_column]),
             ],
         );
     }

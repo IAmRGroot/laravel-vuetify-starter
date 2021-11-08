@@ -95,6 +95,7 @@ import TextInput from '../components/maintenance/inputs/TextInput.vue';
 import { FieldType } from '../enums/maintenance/FieldType';
 import type { Row as RowType } from '../types/maintenance';
 import { useRouter } from '../plugins/router';
+import BelongsToManyInput from '../components/maintenance/inputs/BelongsToManyInput.vue';
 
 const router = useRouter();
 
@@ -124,8 +125,8 @@ const getComponent = (type: FieldType) => {
             return TextInput;
         // case FieldType.BELONGS_TO:
         //     return TextInput;
-        // case FieldType.BELONGS_TO_MANY:
-        //     return TextInput;
+        case FieldType.BELONGS_TO_MANY:
+            return BelongsToManyInput;
         // case FieldType.HAS_MANY:
         //     return TextInput;
     }

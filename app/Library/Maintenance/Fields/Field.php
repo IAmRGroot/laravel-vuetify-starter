@@ -15,6 +15,11 @@ abstract class Field
     ) {
     }
 
+    public function isEditable(): bool
+    {
+        return $this->editable;
+    }
+
     public function visible(bool $visible = true): self
     {
         $this->visible = $visible;

@@ -11,4 +11,5 @@ class FieldType extends Enum
     public const BELONGS_TO      = 5;
     public const BELONGS_TO_MANY = 6;
     public const HAS_MANY        = 7;
+    public const TIMESTAMP       = 8;
 }
