@@ -41,10 +41,11 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int|null                                                                                                  $permissions_count
  * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Auth\Role[]                                          $roles
  * @property int|null                                                                                                  $roles_count
- * @property \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[]                           $tokens
+ * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Auth\PersonalAccessToken[]                           $tokens
  * @property int|null                                                                                                  $tokens_count
  * @property User                                                                                                      $updatedBy
  *
+ * @method static \Database\Factories\UserFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
@@ -76,6 +77,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     use HasApiTokens;
     use HasTimestampsBy;
     use HasSoftDeleteBy;
+    use HasApiTokens;
 
     public const ADMIN = 1;
 

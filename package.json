@@ -4,8 +4,9 @@
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
+    "dev": "vite build --mode=development",
     "watch": "vite build --mode=development --watch",
-    "dev": "vite",
+    "vite": "vite",
     "lint": "eslint --fix resources/vue/src/**/*.ts resources/vue/src/**/*.d.ts resources/vue/src/**/*.vue ./.eslintrc.js ./vite.config.ts",
     "lint-dry": "eslint resources/vue/src/**/*.ts  resources/vue/src/**/*.d.ts resources/vue/src/**/*.vue ./.eslintrc.js ./vite.config.ts"
   },

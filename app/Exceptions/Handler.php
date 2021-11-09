@@ -2,7 +2,10 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -25,5 +28,15 @@ class Handler extends ExceptionHandler
                 app('sentry')->captureException($e);
             }
         });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function unauthenticated($request, AuthenticationException $exception): JsonResponse|RedirectResponse
+    {
+        return $this->shouldReturnJson($request, $exception)
+                    ? response()->json(['message' => $exception->getMessage()], 401)
+                    : redirect()->guest($exception->redirectTo() ?? route('web.login'));
     }
 }

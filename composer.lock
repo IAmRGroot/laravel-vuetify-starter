@@ -9520,16 +9520,16 @@
         },
         {
             "name": "nunomaduro/larastan",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/larastan.git",
-                "reference": "a5a6bdae060c72a5909479fb37c04a7f9fd84533"
+                "reference": "a2db0456e484ac68ba23329ba39cb93197cec7c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/a5a6bdae060c72a5909479fb37c04a7f9fd84533",
-                "reference": "a5a6bdae060c72a5909479fb37c04a7f9fd84533",
+                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/a2db0456e484ac68ba23329ba39cb93197cec7c7",
+                "reference": "a2db0456e484ac68ba23329ba39cb93197cec7c7",
                 "shasum": ""
             },
             "require": {
@@ -9594,7 +9594,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/larastan/issues",
-                "source": "https://github.com/nunomaduro/larastan/tree/1.0.0"
+                "source": "https://github.com/nunomaduro/larastan/tree/1.0.1"
             },
             "funding": [
                 {
@@ -9614,7 +9614,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-11-01T12:39:49+00:00"
+            "time": "2021-11-06T21:03:02+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -11749,5 +11749,5 @@
         "ext-zip": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }

@@ -1,13 +1,13 @@
 version: "3.7"
 services:
-  laravel-db:
-    container_name: ${APP_NAME}-laravel-db
+  mysql:
+    container_name: ${APP_NAME}-mysql
     image: mysql:${MYSQL_VERSION:-8.0}
     restart: unless-stopped
     networks: 
       - traefik_default
     ports:
-      - ${DEV_PORT_DATABASE}:3306
+      - ${DEV_PORT_DATABASE:-10500}:3306
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
@@ -17,16 +17,16 @@ services:
       SERVICE_NAME: mysql
       TZ: ${TZ}
 
-  laravel:
-    container_name: ${APP_NAME}-laravel
+  php:
+    container_name: ${APP_NAME}-php
     image: xolvionl/laravel:${XOLVIO_DOCKER_TAG:-minimal-8.0}
-    user: "${UID}"
+    user: "${UID:-1000}"
     command: php-fpm -F
     hostname: ${APP_NAME}
     extra_hosts:
         - "${APP_NAME}.localhost:host-gateway"
     depends_on:
-      - laravel-db
+      - mysql
     environment:
       TZ: ${TZ}
       COMPOSER_HOME: ~/.composer
@@ -48,12 +48,12 @@ services:
         target: /etc/group
         read_only: true
 
-  laravel-nginx:
-    container_name: ${APP_NAME}-laravel-nginx
+  nginx:
+    container_name: ${APP_NAME}-nginx
     image: nginx:alpine
     restart: unless-stopped
     depends_on:
-      - laravel
+      - php
     environment:
       - PUID=1234
       - PGID=1234
