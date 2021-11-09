@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CleanUpLogsCommand;
 use App\Console\Opcache\Clear;
 use App\Console\Opcache\Compile;
 use App\Console\Opcache\Config;
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
         DeleteToken::class,
         ReplaceTokens::class,
         ViewTokens::class,
+        CleanUpLogsCommand::class,
     ];
 
     protected function schedule(Schedule $schedule): void

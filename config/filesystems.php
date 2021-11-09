@@ -32,6 +32,14 @@ return [
             'driver' => 'local',
             'root'   => storage_path('app'),
         ],
+        'logs' => [
+            'driver' => 'local',
+            'root'   => storage_path('logs'),
+        ],
+        'api_logs' => [
+            'driver' => 'local',
+            'root'   => storage_path('logs/api'),
+        ],
     ],
 
     /*
