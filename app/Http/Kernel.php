@@ -46,6 +46,8 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            \App\Http\Middleware\LogApiRequests::class,
+            \App\Http\Middleware\LogApiResponses::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\SetJsonHeader::class,

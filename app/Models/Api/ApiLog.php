@@ -6,9 +6,9 @@ use App\Facades\Auth;
 use App\Models\Model;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * App\Models\Api\ApiLog.
